@@ -10,13 +10,13 @@ export enum Step {
 }
 
 export interface Round {
+  done: boolean
   next?: PlayerId
   prev?: PlayerId
 }
 
 export interface DrawRound extends Round {
   type: Step.DRAW
-  done: boolean
   dump: Record<string, string>
 }
 

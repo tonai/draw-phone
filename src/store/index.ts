@@ -1,5 +1,5 @@
 import { Drauu, DrawingMode } from "drauu"
-import { ref } from "vue"
+import { computed, ref } from "vue"
 
 import { PlayerRounds, Step } from "../types"
 
@@ -14,6 +14,7 @@ export const playerId = ref("")
 export const playerIds = ref<string[]>([])
 export const playerReady = ref<string[]>([])
 
+export const round = ref(0);
 export const playerRounds = ref<PlayerRounds>([]);
 export const resultPlayerIndex = ref(0)
 
@@ -26,3 +27,11 @@ export const tmp = ref<SVGSVGElement>()
 export const lastTime = ref<Record<string, number>>({})
 export const lastDump = ref<string[]>([])
 export const lastNodes = ref<SVGElement[]>([])
+
+export const prev = computed(() =>
+  round.value > 0
+    ? (playerRounds.value[round.value - 1][
+        playerRounds.value[round.value][playerId.value].prev!
+      ])
+    : undefined
+)

@@ -61,6 +61,6 @@ onMounted(() => {
 <style scoped>
 .table {
   border-collapse: collapse;
-  margin: 0 4vw;
+  width: 90vw;
 }
 </style>

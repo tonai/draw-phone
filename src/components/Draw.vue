@@ -3,6 +3,9 @@ import { onMounted, onUnmounted, ref, watch } from "vue"
 import { createDrauu } from "drauu"
 import { getDiff } from "../helpers"
 import {
+  activeBrush,
+  activeColor,
+  activeSize,
   canRedo,
   canUndo,
   countDown,
@@ -10,12 +13,11 @@ import {
   playerId,
   lastDump,
   lastNodes,
+  prev,
   svg,
   tmp,
-  activeBrush,
-  activeColor,
-  activeSize,
 } from "../store"
+import { Step } from '../types';
 
 const interval = ref<number>()
 
@@ -104,6 +106,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <div v-if="prev && prev.type === Step.WRITE">
+    {{ prev.text }}
+  </div>
   <div class="draw">
     <div class="container">
       <svg

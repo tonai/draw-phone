@@ -73,9 +73,10 @@ Dusk.initLogic({
       }
       const playerRound = game.playerRounds[game.round][playerId] as WriteRound
       playerRound.text = text
+      playerRound.done = true
       if (
         Object.values(game.playerRounds[game.round]).filter(
-          (round) => (round as WriteRound).text
+          (round) => (round as DrawRound).done
         ).length === game.playerIds.length
       ) {
         // Next round
@@ -106,5 +107,5 @@ Dusk.initLogic({
         // If a player left during the game (TODO)
       }
     },
-  }
+  },
 })

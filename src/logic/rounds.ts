@@ -18,9 +18,15 @@ export function nextRound(game: GameState, step: Step.DRAW | Step.WRITE) {
           id,
           {
             type: step,
+            done: false,
             text: "",
-            next: game.round !== game.playerIds.length - 1 ? game.playerIds[modulo(i + game.round + 1, game.playerIds.length)] : undefined,
-            prev: game.playerIds[modulo(i + game.round, game.playerIds.length)],
+            next:
+              game.round !== game.playerIds.length - 1
+                ? game.playerIds[
+                    modulo(i + 1, game.playerIds.length)
+                  ]
+                : undefined,
+            prev: game.playerIds[modulo(i - 1, game.playerIds.length)],
           },
         ])
       )
@@ -32,8 +38,13 @@ export function nextRound(game: GameState, step: Step.DRAW | Step.WRITE) {
             type: step,
             done: false,
             dump: {},
-            next: game.round !== game.playerIds.length - 1 ? game.playerIds[modulo(i + game.round + 1, game.playerIds.length)] : undefined,
-            prev: game.playerIds[modulo(i + game.round, game.playerIds.length)],
+            next:
+              game.round !== game.playerIds.length - 1
+                ? game.playerIds[
+                    modulo(i + 1, game.playerIds.length)
+                  ]
+                : undefined,
+            prev: game.playerIds[modulo(i - + 1, game.playerIds.length)],
           },
         ])
       )

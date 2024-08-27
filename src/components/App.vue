@@ -8,6 +8,7 @@ import {
   playerReady,
   playerRounds,
   resultPlayerIndex,
+  round,
   step,
 } from "../store"
 import { Step } from "../types"
@@ -40,6 +41,9 @@ onMounted(() => {
         // }
         step.value = game.step
       }
+      if (round.value !== game.round) {
+        round.value = game.round
+      }
       if (playerRounds.value !== game.playerRounds) {
         playerRounds.value = game.playerRounds
       }
@@ -69,6 +73,7 @@ onMounted(() => {
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .container {
   display: flex;

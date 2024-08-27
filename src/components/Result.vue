@@ -75,7 +75,7 @@ const player = computed(() => Dusk.getPlayerInfo(props.playerId))
   translate: -2vw 0;
 }
 .inner {
-  width: 76vw;
+  width: 74vw;
 }
 .svg {
   width: 100%;
