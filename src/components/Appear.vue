@@ -17,7 +17,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="appear" ref="appear" :style="{ width, height }">
+  <div ref="appear" class="appear" :style="{ width, height }">
     <slot></slot>
   </div>
 </template>

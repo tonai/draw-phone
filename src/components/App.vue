@@ -7,7 +7,6 @@ import {
   playerIds,
   playerReady,
   playerRounds,
-  resultPlayerIndex,
   round,
   step,
 } from "../store"
@@ -22,7 +21,7 @@ import Write from "./Write.vue"
 
 onMounted(() => {
   Dusk.initClient({
-    onChange: ({ action, game, yourPlayerId }) => {
+    onChange: ({ game, yourPlayerId }) => {
       if (yourPlayerId && playerId.value !== yourPlayerId) {
         playerId.value = yourPlayerId
       }
@@ -47,9 +46,6 @@ onMounted(() => {
       if (playerRounds.value !== game.playerRounds) {
         playerRounds.value = game.playerRounds
       }
-      if (resultPlayerIndex.value !== game.resultPlayerIndex) {
-        resultPlayerIndex.value = game.resultPlayerIndex
-      }
     },
   })
 })
@@ -57,7 +53,7 @@ onMounted(() => {
 
 <template>
   <div class="app">
-    <CountDown v-if="step === Step.WRITE || step === Step.DRAW"/>
+    <CountDown v-if="step === Step.WRITE || step === Step.DRAW" />
     <StartScreen v-if="step === Step.WAIT" />
     <Write v-else-if="step === Step.WRITE" />
     <Results v-else-if="step === Step.RESULTS" />
@@ -79,5 +75,6 @@ onMounted(() => {
   display: flex;
   height: 100%;
   flex-direction: column;
+  width: 100%;
 }
 </style>

@@ -1,8 +1,15 @@
+:root {
+  --bg-color: #3bbbf5;
+  --selected-color: #00ffff;
+  --border-color: #026175;
+}
 body {
   margin: 0;
   height: 100vh;
-  background-color: lightgray;
+  background-color: var(--bg-color);
   overflow-x: hidden;
+  font-family: monospace;
+  font-size: 4vw;
 }
 #app {
   height: 100%;
@@ -18,54 +25,41 @@ button {
 .disabled {
   pointer-events: none;
 }
-/* .icon {
-  width: 1em;
-  height: 1em;
+.box {
+  background: white;
+  border-radius: 2vw;
+  padding: 2vw;
+  word-break: break-word;
+  position: relative;
+  display: inline-block;
+  animation: visible ease 1s;
+  min-height: 6vw;
+  display: inline-flex;
+  align-items: center;
+}
+.say {
+  margin-left: 2vw;
+}
+.say:before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 3vw;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent white;
+  border-width: 2vw 2vw 2vw 0;
+  translate: -2vw 0;
 }
 .button {
-  padding: 1vh 2vw;
-  position: relative;
-  background-color: transparent;
-  font-size: inherit;
-  color: black;
+  border: 2px solid var(--border-color);
   background-color: white;
-  transition: scale 400ms ease;
-  scale: 1;
+  border-radius: 2vw;
+  padding: 2vw 10vw;
 }
-.button:disabled {
-  color: grey;
+.button:hover,
+.button:active,
+.button.selected {
+  background-color: #c5ffff;
 }
-.button span {
-  position: relative;
-  z-index: 1;
-}
-.button:before {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-width: 6px;
-  border-style: solid;
-  border-image: url("/img/border.png") 6;
-}
-.button--selected {
-  background-color: #2a2a2a;
-  color: white;
-  scale: 1.1;
-}
-.button--selected {
-  background-color: #2a2a2a;
-}
-.dialog {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  animation: 400ms ease-in forwards appear;
-}
-@keyframes appear {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-} */

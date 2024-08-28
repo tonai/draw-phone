@@ -17,7 +17,7 @@ import {
   svg,
   tmp,
 } from "../store"
-import { Step } from '../types';
+import { Step } from "../types"
 
 const interval = ref<number>()
 
@@ -68,7 +68,7 @@ onUnmounted(() => {
 watch(countDown, () => {
   if (countDown.value === 0) {
     clearInterval(interval.value)
-    syncDraw(true);
+    syncDraw(true)
   }
 })
 
@@ -106,7 +106,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="prev && prev.type === Step.WRITE">
+  <div v-if="prev && prev.type === Step.WRITE" class="box">
     {{ prev.text }}
   </div>
   <div class="draw">
@@ -126,6 +126,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.box {
+  margin: 0 2vw 2vw;
+}
 .draw {
   flex: 1;
   display: flex;

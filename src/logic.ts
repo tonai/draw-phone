@@ -12,7 +12,6 @@ Dusk.initLogic({
     playerIds: allPlayerIds,
     playerReady: [],
     playerRounds: [],
-    resultPlayerIndex: 0,
     round: -1,
     startTime: 0,
     step: Step.WAIT,
@@ -56,6 +55,12 @@ Dusk.initLogic({
           nextRound(game, Step.WRITE)
         }
       }
+    },
+    gameOver(_, { game }) {
+      Dusk.gameOver({
+        minimizePopUp: true,
+        players: Object.fromEntries(game.playerIds.map((id) => [id, "WON"])),
+      })
     },
     ready(_, { game, playerId }) {
       if (game.step !== Step.WAIT || game.playerReady.includes(playerId)) {

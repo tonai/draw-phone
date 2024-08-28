@@ -9,6 +9,8 @@ function ready() {
 <template>
   <button
     :disabled="playerReady.includes(playerId)"
+    class="button"
+    :class="{ selected: playerReady.includes(playerId) }"
     type="button"
     @click="ready"
   >

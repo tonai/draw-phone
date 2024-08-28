@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Player, PlayerId } from "dusk-games-sdk";
+import { Player, PlayerId } from "dusk-games-sdk"
 import { computed } from "vue"
 
 const props = defineProps<{
@@ -7,7 +7,9 @@ const props = defineProps<{
   player?: Player
 }>()
 
-const player = computed(() => props.player ?? Dusk.getPlayerInfo(props.id ?? ''))
+const player = computed(
+  () => props.player ?? Dusk.getPlayerInfo(props.id ?? "")
+)
 </script>
 
 <template>

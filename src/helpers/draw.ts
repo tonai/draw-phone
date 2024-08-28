@@ -34,11 +34,7 @@ export function getDiff(
     }
     // Deleted item
     if (lastIndex === -1) {
-      diff.push([
-        Action.DELETE,
-        node.dataset.time ?? "",
-        node.dataset.id ?? "",
-      ])
+      diff.push([Action.DELETE, node.dataset.time ?? "", node.dataset.id ?? ""])
       continue
     }
     // New item
@@ -142,14 +138,14 @@ export function clear(
   tmp: SVGSVGElement,
   lastNodes: SVGElement[],
   lastDump: string[],
-  drauu?: { clear: () => void },
+  drauu?: { clear: () => void }
 ): void {
   if (drauu) {
-    drauu.clear();
+    drauu.clear()
   }
-  tmp.innerHTML = "";
-  lastNodes.splice(0, lastNodes.length);
-  lastDump.splice(0, lastDump.length);
+  tmp.innerHTML = ""
+  lastNodes.splice(0, lastNodes.length)
+  lastDump.splice(0, lastDump.length)
 }
 
 // export function draw(

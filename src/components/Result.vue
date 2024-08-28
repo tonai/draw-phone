@@ -10,6 +10,7 @@ import Avatar from "./Avatar.vue"
 const props = defineProps<{
   playerId: PlayerId
   result: DrawRound | WriteRound
+  separator: boolean
 }>()
 
 const player = computed(() => Dusk.getPlayerInfo(props.playerId))
@@ -17,14 +18,14 @@ const player = computed(() => Dusk.getPlayerInfo(props.playerId))
 
 <template>
   <tr class="line">
-    <td colspan="2">
+    <td class="cell" colspan="2">
       <div class="name">{{ player.displayName }}</div>
     </td>
   </tr>
   <tr class="line">
-    <td class="avatar"><Avatar :player="player" /></td>
-    <td>
-      <div class="box">
+    <td class="avatar cell"><Avatar :player="player" /></td>
+    <td class="cell">
+      <div class="box say">
         <Appear>
           <div v-if="result.type === Step.WRITE" class="inner">
             {{ result.text }}
@@ -40,39 +41,29 @@ const player = computed(() => Dusk.getPlayerInfo(props.playerId))
       </div>
     </td>
   </tr>
+  <tr v-if="separator">
+    <td class="cell" colspan="2">
+      <hr class="separator" />
+    </td>
+  </tr>
 </template>
 
 <style scoped>
+.cell {
+  padding: 0;
+}
+.separator {
+  margin: 4vw 0 0 0;
+  width: 100%;
+  border-color: var(--border-color);
+}
 .name {
-  margin-top: 4vw;
+  margin: 4vw 0 1vw;
 }
 .avatar {
   text-align: center;
   width: 10vw;
   vertical-align: top;
-}
-.box {
-  background: white;
-  border-radius: 2vw;
-  font-size: 6vw;
-  padding: 2vw;
-  word-break: break-word;
-  margin-left: 2vw;
-  position: relative;
-  display: inline-block;
-  animation: visible ease 1s;
-}
-.box:before {
-  content: "";
-  position: absolute;
-  left: 1px;
-  top: 3vw;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-color: transparent white;
-  border-width: 2vw 2vw 2vw 0;
-  translate: -2vw 0;
 }
 .inner {
   width: 74vw;

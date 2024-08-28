@@ -22,9 +22,7 @@ export function nextRound(game: GameState, step: Step.DRAW | Step.WRITE) {
             text: "",
             next:
               game.round !== game.playerIds.length - 1
-                ? game.playerIds[
-                    modulo(i + 1, game.playerIds.length)
-                  ]
+                ? game.playerIds[modulo(i + 1, game.playerIds.length)]
                 : undefined,
             prev: game.playerIds[modulo(i - 1, game.playerIds.length)],
           },
@@ -40,11 +38,9 @@ export function nextRound(game: GameState, step: Step.DRAW | Step.WRITE) {
             dump: {},
             next:
               game.round !== game.playerIds.length - 1
-                ? game.playerIds[
-                    modulo(i + 1, game.playerIds.length)
-                  ]
+                ? game.playerIds[modulo(i + 1, game.playerIds.length)]
                 : undefined,
-            prev: game.playerIds[modulo(i - + 1, game.playerIds.length)],
+            prev: game.playerIds[modulo(i - +1, game.playerIds.length)],
           },
         ])
       )

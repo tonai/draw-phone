@@ -2,30 +2,41 @@
 import { computed, onMounted, ref } from "vue"
 import { PlayerId } from "dusk-games-sdk"
 
-import { playerIds, playerRounds, resultPlayerIndex } from "../store"
-import { DrawRound, Step, WriteRound } from "../types"
+import { playerIds, playerRounds } from "../store"
+import { DrawRound, WriteRound } from "../types"
 
 import Result from "./Result.vue"
 
 const intervalDelay = 5000
 
 const results = computed(() => {
-  const results: { playerId: PlayerId; result: DrawRound | WriteRound }[] = []
-  let round = 0
-  let playerId = playerIds.value[resultPlayerIndex.value]
-  let result = playerRounds.value[round][playerId]
-  results.push({
-    playerId,
-    result,
-  })
-  while (result.next) {
-    round++
-    playerId = result.next
-    result = playerRounds.value[round][playerId]
+  const results: {
+    id: string
+    playerId: PlayerId
+    result: DrawRound | WriteRound
+    separator: boolean
+  }[] = []
+  for (let i = 0; i < playerIds.value.length; i++) {
+    let round = 0
+    let playerId = playerIds.value[i]
+    let result = playerRounds.value[round][playerId]
     results.push({
+      id: `${i}-${playerId}`,
       playerId,
       result,
+      separator: i !== 0,
     })
+    while (result.next) {
+      round++
+      playerId = result.next
+      result = playerRounds.value[round][playerId]
+      results.push({
+        id: `${i}-${playerId}`,
+        playerId,
+        result,
+        separator: false,
+      })
+    }
   }
   return results
 })
@@ -37,9 +48,11 @@ const rendererResults = computed(() =>
 
 onMounted(() => {
   const interval = setInterval(() => {
-    renderedIndex.value++
     if (renderedIndex.value === results.value.length) {
       clearInterval(interval)
+      Dusk.actions.gameOver()
+    } else {
+      renderedIndex.value++
     }
   }, intervalDelay)
 })
@@ -50,9 +63,10 @@ onMounted(() => {
     <tbody>
       <Result
         v-for="result of rendererResults"
-        :key="result.playerId"
-        :playerId="result.playerId"
+        :key="result.id"
+        :player-id="result.playerId"
         :result="result.result"
+        :separator="result.separator"
       />
     </tbody>
   </table>
@@ -62,5 +76,6 @@ onMounted(() => {
 .table {
   border-collapse: collapse;
   width: 90vw;
+  margin-bottom: 4vw;
 }
 </style>
