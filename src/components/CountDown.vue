@@ -39,10 +39,14 @@ const backgroundColor = computed(() => {
 <style scoped>
 .countdown {
   height: 2vh;
-  width: 100%;
-  margin-bottom: 2vw;
+  width: 90vw;
   display: flex;
   justify-content: flex-end;
+  background: white;
+  border: 2px solid var(--border-color);
+  border-radius: 2vw;
+  margin: 2vw auto;
+  overflow: hidden;
 }
 .progress {
   transition: all linear 100ms;

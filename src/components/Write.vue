@@ -56,7 +56,11 @@ watch(countDown, () => {
   font-size: 6vw;
 }
 .textarea {
-  width: 94vw;
+  width: 93vw;
   resize: none;
+  border: 2px solid var(--border-color);
+  background-color: white;
+  border-radius: 2vw;
+  padding: 2vw;
 }
 </style>

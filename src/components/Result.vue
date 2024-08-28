@@ -59,6 +59,7 @@ const player = computed(() => Dusk.getPlayerInfo(props.playerId))
 }
 .name {
   margin: 4vw 0 1vw;
+  font-weight: bold;
 }
 .avatar {
   text-align: center;

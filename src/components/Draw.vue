@@ -135,6 +135,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
+  border-radius: 2vw;
 }
 .container {
   position: absolute;

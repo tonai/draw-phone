@@ -35,7 +35,7 @@ function ready() {
 
 <template>
   <div class="start">
-    <img class="logo" alt="Gartic Phone logo" :src="logo" />
+    <img class="logo" alt="Draw Phone logo" :src="logo" />
     <svg class="title" viewBox="0 0 450 70">
       <text
         class="text"
@@ -44,7 +44,7 @@ function ready() {
         dominant-baseline="middle"
         text-anchor="middle"
       >
-        Gartic Phone
+        Draw Phone
       </text>
     </svg>
     <button class="button button-flags" type="button" @click="open">

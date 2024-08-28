@@ -1,1 +1,1 @@
-export const countDowns = { write: 5, draw: 5 }
+export const countDowns = { write: 20, draw: 20 }
