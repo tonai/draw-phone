@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue"
 
-import { countDown, prev } from "../store"
+import { countDown, prev, t } from "../store"
 import { Step } from "../types"
 
 const text = ref("")
@@ -16,7 +16,7 @@ watch(countDown, () => {
 <template>
   <div class="write">
     <div class="title">
-      {{ prev ? "Describe the scene" : "Start a story..." }}
+      {{ prev ? t("Describe the scene") : `${t("Start a story")}...` }}
     </div>
     <textarea
       v-model="text"

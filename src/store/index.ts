@@ -1,7 +1,30 @@
 import { Drauu, DrawingMode } from "drauu"
-import { computed, ref } from "vue"
+import { type Component, computed, ref } from "vue"
+import { createTranslator } from "@tonai/game-utils"
 
+import { translations } from "../constants/i18n"
+import Cn from "../components/icon/Cn.vue"
+import Es from "../components/icon/Es.vue"
+import Fr from "../components/icon/Fr.vue"
+import Pt from "../components/icon/Pt.vue"
+import Ru from "../components/icon/Ru.vue"
+import Uk from "../components/icon/Uk.vue"
 import { PlayerRounds, Step } from "../types"
+
+export const locales: Record<string, Component> = {
+  en: Uk,
+  fr: Fr,
+  ru: Ru,
+  es: Es,
+  pt: Pt,
+  cn: Cn,
+}
+export type Locale = keyof typeof locales
+export const locale = ref<Locale>("en")
+export const translator = createTranslator(translations)
+export function t(word: string) {
+  return translator(locale.value)(word)
+}
 
 export const countDown = ref<number>(0)
 

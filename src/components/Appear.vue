@@ -9,7 +9,9 @@ onMounted(() => {
   setTimeout(() => {
     if (appear.value) {
       width.value = `${appear.value.scrollWidth}px`
-      height.value = `${appear.value.scrollHeight}px`
+      if (appear.value.scrollHeight > appear.value.offsetHeight) {
+        height.value = `${appear.value.scrollHeight}px`
+      }
       appear.value.classList.add("visible")
     }
   }, 1000)

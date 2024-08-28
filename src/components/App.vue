@@ -3,6 +3,7 @@ import { onMounted } from "vue"
 
 import {
   countDown,
+  locale,
   playerId,
   playerIds,
   playerReady,
@@ -24,6 +25,12 @@ onMounted(() => {
     onChange: ({ game, yourPlayerId }) => {
       if (yourPlayerId && playerId.value !== yourPlayerId) {
         playerId.value = yourPlayerId
+      }
+      if (
+        yourPlayerId &&
+        locale.value !== game.persisted[yourPlayerId].locale
+      ) {
+        locale.value = game.persisted[yourPlayerId].locale ?? "en"
       }
       if (playerIds.value !== game.playerIds) {
         playerIds.value = game.playerIds

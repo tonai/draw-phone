@@ -41,10 +41,15 @@ type GameActions = {
   clear: () => void
   draw: (draw: { diff: DiffAction[]; done: boolean }) => void
   gameOver: () => void
+  selectLocale: (locale: string) => void
   write: (text: string) => void
   ready: () => void
 }
 
+type Persisted = {
+  locale: string
+}
+
 declare global {
-  const Dusk: DuskClient<GameState, GameActions>
+  const Dusk: DuskClient<GameState, GameActions, Persisted>
 }

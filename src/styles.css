@@ -1,5 +1,8 @@
 :root {
   --bg-color: #3bbbf5;
+  --bg-color-2: #2fabe3;
+  --bg-size: 5px;
+  --bg-angle: 45deg;
   --selected-color: #00ffff;
   --border-color: #026175;
 }
@@ -8,8 +11,22 @@ body {
   height: 100vh;
   background-color: var(--bg-color);
   overflow-x: hidden;
-  font-family: monospace;
+  font-family: arial, sans-serif;
   font-size: 4vw;
+  background-image: repeating-linear-gradient(
+    var(--bg-angle),
+    var(--bg-color),
+    var(--bg-color) var(--bg-size),
+    var(--bg-color-2) var(--bg-size),
+    var(--bg-color-2) calc(var(--bg-size) * 2)
+  );
+  background-size: calc(var(--bg-size) * 2 / sin(var(--bg-angle))) 100%;
+  animation: bg 1s linear infinite reverse;
+}
+@keyframes bg {
+  0% {
+    background-position: calc(var(--bg-size) * 2 / sin(var(--bg-angle))) 0;
+  }
 }
 #app {
   height: 100%;
@@ -36,6 +53,12 @@ button {
   min-height: 6vw;
   display: inline-flex;
   align-items: center;
+  font-family: monospace;
+  font-size: 4vw;
+}
+textarea {
+  font-family: monospace;
+  font-size: 4vw;
 }
 .say {
   margin-left: 2vw;
@@ -57,9 +80,24 @@ button {
   background-color: white;
   border-radius: 2vw;
   padding: 2vw 10vw;
+  font-family: arial, sans-serif;
+  font-size: 5vw;
 }
 .button:hover,
-.button:active,
-.button.selected {
+.button:active {
   background-color: #c5ffff;
+}
+.button.selected {
+  background-color: var(--border-color);
+  color: white;
+  border-color: white;
+}
+.button.selected:hover,
+.button.selected:active {
+  background-color: #0a8099;
+}
+.icon {
+  display: block;
+  width: 10vw;
+  height: 10vw;
 }

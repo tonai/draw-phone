@@ -4,6 +4,7 @@ import { computed } from "vue"
 
 const props = defineProps<{
   id?: PlayerId
+  name?: boolean
   player?: Player
 }>()
 
@@ -15,21 +16,31 @@ const player = computed(
 <template>
   <div class="avatar">
     <img class="image" :src="player.avatarUrl" />
+    <div v-if="name" class="name">{{ player.displayName }}</div>
   </div>
 </template>
 
 <style scoped>
 .avatar {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
   position: relative;
-  border: 1vw solid black;
-  border-radius: 50%;
-  background-color: black;
-  box-sizing: border-box;
+  align-items: center;
 }
 .image {
   display: block;
-  max-width: 12vw;
+  max-width: 14vw;
   width: 100%;
+  border: 1vw solid var(--border-color);
+  border-radius: 50%;
+  background-color: var(--border-color);
+  box-sizing: border-box;
+}
+.name {
+  text-align: center;
+  margin-top: 1vw;
+  background-color: white;
+  padding: 1vw;
+  border-radius: 2vw;
 }
 </style>

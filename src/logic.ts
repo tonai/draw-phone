@@ -5,6 +5,7 @@ import { Action, DiffAction, DrawRound, Step, WriteRound } from "./types"
 Dusk.initLogic({
   minPlayers: 2,
   maxPlayers: 6,
+  persistPlayerData: true,
   reactive: true,
   updatesPerSecond: 10,
   setup: (allPlayerIds) => ({
@@ -63,14 +64,22 @@ Dusk.initLogic({
       })
     },
     ready(_, { game, playerId }) {
-      if (game.step !== Step.WAIT || game.playerReady.includes(playerId)) {
+      if (game.step !== Step.WAIT) {
         return Dusk.invalidAction()
       }
-      game.playerReady.push(playerId)
-      if (game.playerReady.length === game.playerIds.length) {
-        // Start writing first idea
-        nextRound(game, Step.WRITE)
+      const index = game.playerReady.indexOf(playerId)
+      if (index !== -1) {
+        game.playerReady.splice(index, 1)
+      } else {
+        game.playerReady.push(playerId)
+        if (game.playerReady.length === game.playerIds.length) {
+          // Start writing first idea
+          nextRound(game, Step.WRITE)
+        }
       }
+    },
+    selectLocale(locale: string, { game, playerId }) {
+      game.persisted[playerId].locale = locale
     },
     write(text, { game, playerId }) {
       if (game.step !== Step.WRITE) {
