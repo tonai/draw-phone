@@ -378,15 +378,6 @@ function size(size: number) {
   width: calc(var(--size) * 13 + var(--margin) + 4px);
   margin: var(--spacing) auto;
 }
-.controls:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -3px;
-  background: center top url(/img/line.png) repeat-x;
-  height: 6px;
-}
 .controls > * {
   position: relative;
 }

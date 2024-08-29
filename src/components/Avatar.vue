@@ -15,7 +15,9 @@ const player = computed(
 
 <template>
   <div class="avatar">
-    <img class="image" :src="player.avatarUrl" />
+    <div class="wrapper">
+      <img class="image" :src="player.avatarUrl" />
+    </div>
     <div v-if="name" class="name">{{ player.displayName }}</div>
   </div>
 </template>
@@ -27,14 +29,24 @@ const player = computed(
   position: relative;
   align-items: center;
 }
+.wrapper {
+  aspect-ratio: 1 / 1;
+  position: relative;
+  width: 100%;
+  max-width: 30vw;
+}
 .image {
   display: block;
-  max-width: 14vw;
-  width: 100%;
-  border: 1vw solid var(--border-color);
+  border: min(1vw, 0.5vh) solid var(--border-color);
   border-radius: 50%;
   background-color: var(--border-color);
   box-sizing: border-box;
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  left: 50%;
+  translate: -50% 0;
 }
 .name {
   text-align: center;
