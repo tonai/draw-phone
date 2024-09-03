@@ -25,11 +25,15 @@ watch(countDown, () => {
       maxlength="76"
       rows="2"
     ></textarea>
-    <div v-if="prev && prev.type === Step.DRAW" class="box">
+    <div class="box" :class="{ invisible: !(prev && prev.type === Step.DRAW) }">
       <svg
         class="svg disabled"
         viewBox="0 0 300 400"
-        v-html="Object.values(prev.dump).join('')"
+        v-html="
+          prev && prev.type === Step.DRAW
+            ? Object.values(prev.dump).join('')
+            : ''
+        "
       ></svg>
     </div>
   </div>
@@ -45,6 +49,10 @@ watch(countDown, () => {
 }
 .box {
   margin-top: 4vw;
+  width: 93vw;
+}
+.invisible {
+  opacity: 0;
 }
 .svg {
   background-color: white;

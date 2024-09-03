@@ -2,7 +2,7 @@ import { Drauu, DrawingMode } from "drauu"
 import { type Component, computed, ref } from "vue"
 import { createTranslator } from "@tonai/game-utils"
 
-import { translations } from "../constants/i18n"
+import { translations } from "../constants"
 import Cn from "../components/icon/Cn.vue"
 import Es from "../components/icon/Es.vue"
 import Fr from "../components/icon/Fr.vue"

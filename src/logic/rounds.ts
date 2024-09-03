@@ -1,4 +1,4 @@
-import { modulo } from "@tonai/game-utils"
+import { modulo } from "@tonai/game-utils/server"
 import { countDowns } from "../constants"
 import { GameState, Step } from "../types"
 

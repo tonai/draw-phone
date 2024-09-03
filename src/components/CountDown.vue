@@ -45,7 +45,7 @@ const backgroundColor = computed(() => {
   background: white;
   border: 2px solid var(--border-color);
   border-radius: 2vw;
-  margin: 2vw auto;
+  margin: 0.5vh auto;
   overflow: hidden;
 }
 .progress {

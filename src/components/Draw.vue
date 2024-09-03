@@ -15,6 +15,7 @@ import {
   lastNodes,
   prev,
   svg,
+  t,
   tmp,
 } from "../store"
 import { Step } from "../types"
@@ -83,12 +84,6 @@ function start() {
   })
 }
 
-// function committed(node?: SVGElement) {
-//   if (node) {
-//     node.dataset.committed = "1"
-//   }
-// }
-
 function updateState() {
   if (drauu.value) {
     canRedo.value = drauu.value.canRedo()
@@ -99,7 +94,6 @@ function updateState() {
 onMounted(() => {
   if (drauu.value) {
     drauu.value.on("start", start)
-    // drauu.value.on("committed", committed)
     drauu.value.on("changed", updateState)
   }
 })
@@ -107,6 +101,7 @@ onMounted(() => {
 
 <template>
   <div v-if="prev && prev.type === Step.WRITE" class="box">
+    {{ t("It's time to draw:") }}<br />
     {{ prev.text }}
   </div>
   <div class="draw">
@@ -127,7 +122,8 @@ onMounted(() => {
 
 <style scoped>
 .box {
-  margin: 0 2vw 2vw;
+  margin: 0 2vw 0.5vh;
+  padding: 1vw;
 }
 .draw {
   flex: 1;
@@ -135,7 +131,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  border-radius: 2vw;
+  background-color: var(--border-color);
 }
 .container {
   position: absolute;

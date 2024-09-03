@@ -72,6 +72,7 @@ const player = computed(() => Dusk.getPlayerInfo(props.playerId))
 }
 .svg {
   width: 100%;
+  display: block;
 }
 @keyframes visible {
   from {

@@ -13,15 +13,15 @@ import {
   tmp,
 } from "../store"
 
-import Arrow from './icon/Arrow.vue';
-import Circle from './icon/Circle.vue';
-import Clear from './icon/Clear.vue';
-import Eraser from './icon/Eraser.vue';
-import Line from './icon/Line.vue';
-import Pen from './icon/Pen.vue';
-import Rectangle from './icon/Rectangle.vue';
-import Redo from './icon/Redo.vue';
-import Undo from './icon/Undo.vue';
+import Arrow from "./icon/Arrow.vue"
+import Circle from "./icon/Circle.vue"
+import Clear from "./icon/Clear.vue"
+import Eraser from "./icon/Eraser.vue"
+import Line from "./icon/Line.vue"
+import Pen from "./icon/Pen.vue"
+import Rectangle from "./icon/Rectangle.vue"
+import Redo from "./icon/Redo.vue"
+import Undo from "./icon/Undo.vue"
 
 function undo() {
   drauu.value?.undo()
@@ -263,7 +263,7 @@ function size(size: number) {
         title="Draw"
         @click="brush('draw')"
       >
-        <Pen/>
+        <Pen />
       </button>
       <button
         class="brush"
@@ -272,7 +272,7 @@ function size(size: number) {
         title="Line"
         @click="brush('line')"
       >
-      <Line/>
+        <Line />
       </button>
       <button
         class="brush"
@@ -281,7 +281,7 @@ function size(size: number) {
         title="Arrow"
         @click="brush('arrow')"
       >
-        <Arrow/>
+        <Arrow />
       </button>
       <button
         class="brush"
@@ -290,7 +290,7 @@ function size(size: number) {
         title="Eraser"
         @click="brush('eraseLine')"
       >
-        <Eraser/>
+        <Eraser />
       </button>
       <button
         class="brush"
@@ -299,7 +299,7 @@ function size(size: number) {
         title="Rect"
         @click="brush('rectangle')"
       >
-        <Rectangle/>
+        <Rectangle />
       </button>
       <button
         class="brush"
@@ -308,7 +308,7 @@ function size(size: number) {
         title="Ellipse"
         @click="brush('ellipse')"
       >
-        <Circle/>
+        <Circle />
       </button>
     </div>
     <div class="sizes">
@@ -344,21 +344,13 @@ function size(size: number) {
 
     <div class="actions">
       <button
-        class="brush left"
-        aria-label="Clear"
-        title="Clear"
-        @click="handleClear"
-      >
-        <Clear/>
-      </button>
-      <button
         class="brush"
         :disabled="!canUndo"
         aria-label="Undo"
         title="Undo"
         @click="undo"
       >
-        <Undo/>
+        <Undo />
       </button>
       <button
         :disabled="!canRedo"
@@ -367,7 +359,15 @@ function size(size: number) {
         title="Redo"
         @click="redo"
       >
-        <Redo/>
+        <Redo />
+      </button>
+      <button
+        class="brush clear"
+        aria-label="Clear"
+        title="Clear"
+        @click="handleClear"
+      >
+        <Clear />
       </button>
     </div>
   </div>
@@ -481,5 +481,18 @@ function size(size: number) {
   width: 90%;
   background-color: black;
   border-radius: 50%;
+}
+.brush.clear {
+  margin-left: 4vw;
+  position: relative;
+}
+.brush.clear:before {
+  content: "";
+  position: absolute;
+  left: -2vw;
+  top: 10%;
+  bottom: 10%;
+  width: 2px;
+  background-color: lightgrey;
 }
 </style>

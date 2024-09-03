@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted } from "vue"
+import { onMounted, onUnmounted, ref, watch } from "vue"
+import { ISounds, initSounds, playMusic } from "@tonai/game-utils"
 
 import {
   countDown,
@@ -42,10 +43,16 @@ onMounted(() => {
         countDown.value = game.countDown
       }
       if (step.value !== game.step) {
-        // if (game.step === Step.PLAY) {
-        //   playSound("start")
-        // }
         step.value = game.step
+        if (game.step === Step.RESULTS) {
+          volume.value = 1
+          sound.value = "results"
+        } else if (game.step !== Step.WAIT && sound.value !== "play") {
+          volume.value = 0.4
+          sound.value = "play"
+        } else if (game.step === Step.WAIT) {
+          sound.value = "start"
+        }
       }
       if (round.value !== game.round) {
         round.value = game.round
@@ -56,6 +63,27 @@ onMounted(() => {
     },
   })
 })
+
+const sound = ref("")
+const volume = ref(1)
+const music = ref<HTMLAudioElement>()
+
+watch(sound, () => {
+  if (sound.value) {
+    music.value?.pause()
+    music.value = playMusic(sound.value, volume.value)
+  }
+})
+
+onMounted(() => {
+  initSounds({
+    play: "play.mp3",
+    results: "results.mp3",
+    start: "start.mp3",
+  })
+  sound.value = "start"
+})
+onUnmounted(() => music.value?.pause())
 </script>
 
 <template>

@@ -25,8 +25,13 @@ function close() {
   opened.value = false
 }
 
+function stop(event: Event) {
+  event.stopPropagation()
+}
+
 function select(language: Locale) {
   Dusk.actions.selectLocale(language)
+  opened.value = false
 }
 
 function ready() {
@@ -67,7 +72,7 @@ function ready() {
     </button>
   </div>
   <div v-if="opened" class="modal" @click="close">
-    <div class="modal-content">
+    <div class="modal-content" @click="stop">
       <button
         v-for="(component, lang) of locales"
         :key="lang"
@@ -143,9 +148,7 @@ function ready() {
   }
 }
 .title {
-  font:
-    bold 60px Arial,
-    sans-serif;
+  font: bold 72px serif;
   width: 100%;
   aspect-ratio: 45 / 7;
   flex-shrink: 0;
@@ -156,6 +159,7 @@ function ready() {
   stroke-width: min(0.5vw, 0.25vh);
   stroke-linejoin: round;
   animation: stoke 5s linear infinite;
+  translate: 0 12%;
 }
 @keyframes stoke {
   0% {
@@ -216,12 +220,12 @@ function ready() {
   border: 2px solid var(--border-color);
   padding: 10vh 20vw;
   border-radius: 5vw;
-  gap: 2vh;
+  gap: 1vh;
 }
 .flag {
   border: 0;
   background-color: transparent;
-  padding: 0;
+  padding: 1vw;
   margin: 0;
 }
 </style>
