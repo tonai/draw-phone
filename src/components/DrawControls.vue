@@ -13,6 +13,16 @@ import {
   tmp,
 } from "../store"
 
+import Arrow from './icon/Arrow.vue';
+import Circle from './icon/Circle.vue';
+import Clear from './icon/Clear.vue';
+import Eraser from './icon/Eraser.vue';
+import Line from './icon/Line.vue';
+import Pen from './icon/Pen.vue';
+import Rectangle from './icon/Rectangle.vue';
+import Redo from './icon/Redo.vue';
+import Undo from './icon/Undo.vue';
+
 function undo() {
   drauu.value?.undo()
 }
@@ -253,7 +263,7 @@ function size(size: number) {
         title="Draw"
         @click="brush('draw')"
       >
-        ✏️
+        <Pen/>
       </button>
       <button
         class="brush"
@@ -262,7 +272,7 @@ function size(size: number) {
         title="Line"
         @click="brush('line')"
       >
-        ⁄
+      <Line/>
       </button>
       <button
         class="brush"
@@ -271,7 +281,7 @@ function size(size: number) {
         title="Arrow"
         @click="brush('arrow')"
       >
-        ↗
+        <Arrow/>
       </button>
       <button
         class="brush"
@@ -280,7 +290,7 @@ function size(size: number) {
         title="Eraser"
         @click="brush('eraseLine')"
       >
-        🧹
+        <Eraser/>
       </button>
       <button
         class="brush"
@@ -289,7 +299,7 @@ function size(size: number) {
         title="Rect"
         @click="brush('rectangle')"
       >
-        □
+        <Rectangle/>
       </button>
       <button
         class="brush"
@@ -298,7 +308,7 @@ function size(size: number) {
         title="Ellipse"
         @click="brush('ellipse')"
       >
-        ○
+        <Circle/>
       </button>
     </div>
     <div class="sizes">
@@ -339,7 +349,7 @@ function size(size: number) {
         title="Clear"
         @click="handleClear"
       >
-        🗑
+        <Clear/>
       </button>
       <button
         class="brush"
@@ -348,7 +358,7 @@ function size(size: number) {
         title="Undo"
         @click="undo"
       >
-        ↩️
+        <Undo/>
       </button>
       <button
         :disabled="!canRedo"
@@ -357,7 +367,7 @@ function size(size: number) {
         title="Redo"
         @click="redo"
       >
-        ↪️
+        <Redo/>
       </button>
     </div>
   </div>
