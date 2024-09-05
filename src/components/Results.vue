@@ -59,20 +59,31 @@ onMounted(() => {
 </script>
 
 <template>
-  <table class="table">
-    <tbody>
-      <Result
-        v-for="result of rendererResults"
-        :key="result.id"
-        :player-id="result.playerId"
-        :result="result.result"
-        :separator="result.separator"
-      />
-    </tbody>
-  </table>
+  <div class="results">
+    <table class="table">
+      <tbody>
+        <Result
+          v-for="result of rendererResults"
+          :key="result.id"
+          :player-id="result.playerId"
+          :result="result.result"
+          :separator="result.separator"
+        />
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <style scoped>
+.results {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 100vh;
+  width: 100%;
+  overflow: auto;
+}
 .table {
   border-collapse: collapse;
   width: 90vw;

@@ -285,15 +285,6 @@ function size(size: number) {
       </button>
       <button
         class="brush"
-        :class="{ active: activeBrush === 'eraseLine' }"
-        aria-label="Eraser"
-        title="Eraser"
-        @click="brush('eraseLine')"
-      >
-        <Eraser />
-      </button>
-      <button
-        class="brush"
         :class="{ active: activeBrush === 'rectangle' }"
         aria-label="Rect"
         title="Rect"
@@ -309,6 +300,15 @@ function size(size: number) {
         @click="brush('ellipse')"
       >
         <Circle />
+      </button>
+      <button
+        class="brush"
+        :class="{ active: activeBrush === 'eraseLine' }"
+        aria-label="Eraser"
+        title="Eraser"
+        @click="brush('eraseLine')"
+      >
+        <Eraser />
       </button>
     </div>
     <div class="sizes">
@@ -386,7 +386,7 @@ function size(size: number) {
   position: relative;
   z-index: 1;
   width: calc(var(--size) * 13 + var(--margin) + 4px);
-  margin: var(--spacing) auto;
+  margin: var(--spacing) auto 1.5vh;
 }
 .controls > * {
   position: relative;

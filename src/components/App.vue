@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from "vue"
-import { ISounds, initSounds, playMusic } from "@tonai/game-utils"
+import { initSounds, playMusic } from "@tonai/game-utils"
 
 import {
   countDown,
