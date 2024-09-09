@@ -10,6 +10,7 @@ import {
   canUndo,
   countDown,
   drauu,
+  isDrawing,
   playerId,
   lastDump,
   lastNodes,
@@ -74,6 +75,7 @@ watch(countDown, () => {
 })
 
 function start() {
+  isDrawing.value = true
   setTimeout(() => {
     // @ts-expect-error private access
     const currentNode = drauu.value?._currentNode
@@ -82,6 +84,10 @@ function start() {
       currentNode.dataset.id = playerId.value
     }
   })
+}
+
+function end() {
+  isDrawing.value = false
 }
 
 function updateState() {
@@ -94,6 +100,7 @@ function updateState() {
 onMounted(() => {
   if (drauu.value) {
     drauu.value.on("start", start)
+    drauu.value.on("end", end)
     drauu.value.on("changed", updateState)
   }
 })

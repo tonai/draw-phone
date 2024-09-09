@@ -31,6 +31,7 @@ export const countDown = ref<number>(0)
 export const drauu = ref<Drauu>()
 export const canUndo = ref(false)
 export const canRedo = ref(false)
+export const isDrawing = ref(false)
 
 export const step = ref(Step.WAIT)
 export const playerId = ref("")
