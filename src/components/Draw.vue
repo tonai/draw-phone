@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from "vue"
 import { createDrauu } from "drauu"
-import { getDiff } from "../helpers"
 import {
   activeBrush,
   activeColor,
@@ -9,43 +8,19 @@ import {
   canRedo,
   canUndo,
   countDown,
+  disabled,
   drauu,
   isDrawing,
   playerId,
-  lastDump,
-  lastNodes,
   prev,
   svg,
+  syncDraw,
   t,
   tmp,
 } from "../store"
 import { Step } from "../types"
 
 const interval = ref<number>()
-
-function syncDraw(done = false) {
-  if (svg.value && drauu.value) {
-    const nodes = [...svg.value.children].filter(
-      (node) =>
-        node instanceof SVGElement &&
-        "id" in node.dataset &&
-        "time" in node.dataset
-    ) as SVGElement[]
-    const dump = nodes.map((node) => node.outerHTML)
-    const diff = getDiff(
-      playerId.value,
-      lastNodes.value,
-      nodes,
-      lastDump.value,
-      dump
-    )
-    if (diff.length > 0 || done) {
-      Dusk.actions.draw({ diff, done })
-    }
-    lastNodes.value = nodes
-    lastDump.value = dump
-  }
-}
 
 onMounted(() => {
   const brush = {
@@ -117,8 +92,8 @@ onMounted(() => {
         ref="svg"
         class="svg"
         :class="{
-          disabled: false,
-          enabled: true,
+          disabled: disabled,
+          enabled: !disabled,
         }"
         viewBox="0 0 300 400"
       ></svg>

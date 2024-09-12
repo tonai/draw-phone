@@ -1,6 +1,6 @@
 import { countDowns } from "./constants"
 import { nextRound } from "./logic/rounds"
-import { Action, DiffAction, DrawRound, Step, WriteRound } from "./types"
+import { Action, DrawRound, Step, WriteRound } from "./types"
 
 Dusk.initLogic({
   minPlayers: 2,
@@ -25,11 +25,10 @@ Dusk.initLogic({
       const playerRound = game.playerRounds[game.round][playerId] as DrawRound
       playerRound.dump = {}
     },
-    draw(draw: { diff: DiffAction[]; done: boolean }, { game, playerId }) {
+    draw({ diff, done, enabled }, { game, playerId }) {
       if (game.step !== Step.DRAW) {
         return Dusk.invalidAction()
       }
-      const { diff, done } = draw
       const playerRound = game.playerRounds[game.round][playerId] as DrawRound
       for (const [action, timeId, , dump] of diff) {
         switch (action) {
@@ -47,6 +46,13 @@ Dusk.initLogic({
       }
       if (done) {
         playerRound.done = true
+        if (!enabled && !game.playerReady.includes(playerId)) {
+          game.playerReady.push(playerId)
+        } else if (enabled && game.playerReady.includes(playerId)) {
+          const index = game.playerReady.indexOf(playerId)
+          game.playerReady.splice(index, 1)
+          playerRound.done = false
+        }
         if (
           Object.values(game.playerRounds[game.round]).filter(
             (round) => (round as DrawRound).done
@@ -81,13 +87,20 @@ Dusk.initLogic({
     selectLocale(locale: string, { game, playerId }) {
       game.persisted[playerId].locale = locale
     },
-    write(text, { game, playerId }) {
+    write({ enabled, text }, { game, playerId }) {
       if (game.step !== Step.WRITE) {
         return Dusk.invalidAction()
       }
       const playerRound = game.playerRounds[game.round][playerId] as WriteRound
       playerRound.text = text
       playerRound.done = true
+      if (!enabled && !game.playerReady.includes(playerId)) {
+        game.playerReady.push(playerId)
+      } else if (enabled && game.playerReady.includes(playerId)) {
+        const index = game.playerReady.indexOf(playerId)
+        game.playerReady.splice(index, 1)
+        playerRound.done = false
+      }
       if (
         Object.values(game.playerRounds[game.round]).filter(
           (round) => (round as DrawRound).done

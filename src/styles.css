@@ -121,6 +121,26 @@ textarea {
   border-radius: 3vw;
   animation: pulse 2s linear infinite;
 }
+.button-sm {
+  font-size: calc(var(--font-size) * 1.5);
+  padding: 2vw;
+  line-height: 4vw;
+  min-width: calc(8vw + 4px);
+}
+.button-sm:before {
+  animation: 10s ease-in infinite both shine-sm;
+}
+@keyframes shine-sm {
+  0% {
+    left: -150%;
+  }
+  90% {
+    left: -150%;
+  }
+  100% {
+    left: 250%;
+  }
+}
 @keyframes pulse {
   0% {
     scale: 1;

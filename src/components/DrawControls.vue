@@ -7,10 +7,12 @@ import {
   activeSize,
   canRedo,
   canUndo,
+  disabled,
   drauu,
   isDrawing,
   lastDump,
   lastNodes,
+  syncDraw,
   tmp,
 } from "../store"
 
@@ -402,6 +404,17 @@ function size(size: number) {
         <Clear />
       </button>
     </div>
+
+    <div class="validate">
+      <button
+        class="button button-sm"
+        :class="{ selected: disabled }"
+        type="button"
+        @click="syncDraw(true, disabled)"
+      >
+        ✓
+      </button>
+    </div>
   </div>
 </template>
 
@@ -526,5 +539,15 @@ function size(size: number) {
   bottom: 10%;
   width: 2px;
   background-color: lightgrey;
+}
+.validate {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: calc(var(--size) * 2);
+  height: calc(var(--size) * 2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

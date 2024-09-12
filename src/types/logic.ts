@@ -39,10 +39,10 @@ export interface GameState {
 
 type GameActions = {
   clear: () => void
-  draw: (draw: { diff: DiffAction[]; done: boolean }) => void
+  draw: (draw: { diff: DiffAction[]; done: boolean; enabled: boolean }) => void
   gameOver: () => void
   selectLocale: (locale: string) => void
-  write: (text: string) => void
+  write: (data: { enabled: boolean; text: string }) => void
   ready: () => void
 }
 

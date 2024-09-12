@@ -10,6 +10,7 @@ export function nextRound(game: GameState, step: Step.DRAW | Step.WRITE) {
     // Next round
     game.round++
     game.step = step
+    game.playerReady = []
     game.countDown = countDowns[step]
     game.startTime = Dusk.gameTime()
     if (step === Step.WRITE) {

@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { ref, watch } from "vue"
 
-import { countDown, prev, t } from "../store"
+import { countDown, disabled, prev, t } from "../store"
 import { Step } from "../types"
 
 const text = ref("")
+function write(enabled: boolean = false) {
+  Dusk.actions.write({ enabled, text: text.value })
+}
 
 watch(countDown, () => {
   if (countDown.value === 0) {
-    Dusk.actions.write(text.value)
+    write()
   }
 })
 </script>
@@ -20,11 +23,20 @@ watch(countDown, () => {
     </div>
     <textarea
       v-model="text"
+      :disabled="disabled"
       autofocus
       class="textarea"
       maxlength="76"
       rows="2"
     ></textarea>
+    <button
+      class="button button-sm"
+      :class="{ selected: disabled }"
+      type="button"
+      @click="write(disabled)"
+    >
+      ✓
+    </button>
     <div class="box" :class="{ invisible: !(prev && prev.type === Step.DRAW) }">
       <svg
         class="svg disabled"
@@ -59,7 +71,7 @@ watch(countDown, () => {
   width: 100%;
 }
 .title {
-  margin-bottom: 4vw;
+  margin-bottom: 0.5vh;
   font-weight: bold;
   font-size: 6vw;
 }
@@ -70,5 +82,6 @@ watch(countDown, () => {
   background-color: white;
   border-radius: 2vw;
   padding: 2vw;
+  margin-bottom: 0.5vh;
 }
 </style>

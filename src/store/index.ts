@@ -9,6 +9,7 @@ import Fr from "../components/icon/Fr.vue"
 import Pt from "../components/icon/Pt.vue"
 import Ru from "../components/icon/Ru.vue"
 import Uk from "../components/icon/Uk.vue"
+import { getDiff } from "../helpers"
 import { PlayerRounds, Step } from "../types"
 
 export const locales: Record<string, Component> = {
@@ -51,6 +52,10 @@ export const lastTime = ref<Record<string, number>>({})
 export const lastDump = ref<string[]>([])
 export const lastNodes = ref<SVGElement[]>([])
 
+export const disabled = computed(() =>
+  playerReady.value.includes(playerId.value)
+)
+
 export const prev = computed(() =>
   round.value > 0
     ? playerRounds.value[round.value - 1][
@@ -58,3 +63,27 @@ export const prev = computed(() =>
       ]
     : undefined
 )
+
+export function syncDraw(done = false, enabled = false) {
+  if (svg.value && drauu.value) {
+    const nodes = [...svg.value.children].filter(
+      (node) =>
+        node instanceof SVGElement &&
+        "id" in node.dataset &&
+        "time" in node.dataset
+    ) as SVGElement[]
+    const dump = nodes.map((node) => node.outerHTML)
+    const diff = getDiff(
+      playerId.value,
+      lastNodes.value,
+      nodes,
+      lastDump.value,
+      dump
+    )
+    if (diff.length > 0 || done) {
+      Dusk.actions.draw({ diff, done, enabled })
+    }
+    lastNodes.value = nodes
+    lastDump.value = dump
+  }
+}
