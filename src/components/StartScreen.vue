@@ -41,7 +41,12 @@ function ready() {
 
 <template>
   <div class="start">
-    <button class="button button-flags" type="button" @click="open">
+    <button
+      v-if="playerId"
+      class="button button-flags"
+      type="button"
+      @click="open"
+    >
       <component :is="locales[locale]" />
     </button>
     <div class="logo">
@@ -63,6 +68,7 @@ function ready() {
       <Avatar v-for="id of playerIds" :id="id" :key="id" name class="player" />
     </div>
     <button
+      v-if="playerId"
       class="button button-lg"
       :class="{ selected: playerReady.includes(playerId) }"
       type="button"

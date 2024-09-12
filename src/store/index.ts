@@ -52,6 +52,7 @@ export const lastTime = ref<Record<string, number>>({})
 export const lastDump = ref<string[]>([])
 export const lastNodes = ref<SVGElement[]>([])
 
+export const isPlayer = computed(() => playerIds.value.includes(playerId.value))
 export const disabled = computed(() =>
   playerReady.value.includes(playerId.value)
 )

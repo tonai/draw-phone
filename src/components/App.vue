@@ -4,6 +4,7 @@ import { initSounds, playMusic } from "@tonai/game-utils"
 
 import {
   countDown,
+  isPlayer,
   locale,
   playerId,
   playerIds,
@@ -11,6 +12,7 @@ import {
   playerRounds,
   round,
   step,
+  t,
 } from "../store"
 import { Step } from "../types"
 
@@ -90,11 +92,14 @@ onUnmounted(() => music.value?.pause())
   <div class="app">
     <CountDown v-if="step === Step.WRITE || step === Step.DRAW" />
     <StartScreen v-if="step === Step.WAIT" />
-    <Write v-else-if="step === Step.WRITE" />
-    <Results v-else-if="step === Step.RESULTS" />
-    <div v-else class="container">
+    <Write v-if="step === Step.WRITE && isPlayer" />
+    <div v-if="step === Step.DRAW && isPlayer" class="container">
       <Draw />
       <DrawControls />
+    </div>
+    <Results v-if="step === Step.RESULTS" />
+    <div v-else-if="step !== Step.WAIT && !isPlayer" class="spectator">
+      {{ t("Waiting for results") }}
     </div>
   </div>
 </template>
@@ -111,5 +116,11 @@ onUnmounted(() => music.value?.pause())
   height: 100%;
   flex-direction: column;
   width: 100%;
+}
+.spectator {
+  flex: 1;
+  font-size: 8vw;
+  display: flex;
+  align-items: center;
 }
 </style>

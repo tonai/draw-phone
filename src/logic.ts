@@ -63,10 +63,10 @@ Dusk.initLogic({
         }
       }
     },
-    gameOver(_, { game }) {
+    gameOver(_, { allPlayerIds }) {
       Dusk.gameOver({
         minimizePopUp: true,
-        players: Object.fromEntries(game.playerIds.map((id) => [id, "WON"])),
+        players: Object.fromEntries(allPlayerIds.map((id) => [id, "WON"])),
       })
     },
     ready(_, { game, playerId }) {
