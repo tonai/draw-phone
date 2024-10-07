@@ -30,12 +30,12 @@ function stop(event: Event) {
 }
 
 function select(language: Locale) {
-  Dusk.actions.selectLocale(language)
+  Rune.actions.selectLocale(language)
   opened.value = false
 }
 
 function ready() {
-  Dusk.actions.ready()
+  Rune.actions.ready()
 }
 </script>
 

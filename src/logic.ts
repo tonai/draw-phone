@@ -2,7 +2,7 @@ import { countDowns } from "./constants"
 import { nextRound } from "./logic/rounds"
 import { Action, DrawRound, Step, WriteRound } from "./types"
 
-Dusk.initLogic({
+Rune.initLogic({
   minPlayers: 2,
   maxPlayers: 6,
   persistPlayerData: true,
@@ -20,14 +20,14 @@ Dusk.initLogic({
   actions: {
     clear(_, { game, playerId }) {
       if (game.step !== Step.DRAW) {
-        return Dusk.invalidAction()
+        return Rune.invalidAction()
       }
       const playerRound = game.playerRounds[game.round][playerId] as DrawRound
       playerRound.dump = {}
     },
     draw({ diff, done, enabled }, { game, playerId }) {
       if (game.step !== Step.DRAW) {
-        return Dusk.invalidAction()
+        return Rune.invalidAction()
       }
       const playerRound = game.playerRounds[game.round][playerId] as DrawRound
       for (const [action, timeId, , dump] of diff) {
@@ -64,14 +64,14 @@ Dusk.initLogic({
       }
     },
     gameOver(_, { allPlayerIds }) {
-      Dusk.gameOver({
+      Rune.gameOver({
         minimizePopUp: true,
         players: Object.fromEntries(allPlayerIds.map((id) => [id, "WON"])),
       })
     },
     ready(_, { game, playerId }) {
       if (game.step !== Step.WAIT) {
-        return Dusk.invalidAction()
+        return Rune.invalidAction()
       }
       const index = game.playerReady.indexOf(playerId)
       if (index !== -1) {
@@ -89,7 +89,7 @@ Dusk.initLogic({
     },
     write({ enabled, text }, { game, playerId }) {
       if (game.step !== Step.WRITE) {
-        return Dusk.invalidAction()
+        return Rune.invalidAction()
       }
       const playerRound = game.playerRounds[game.round][playerId] as WriteRound
       playerRound.text = text
@@ -114,7 +114,7 @@ Dusk.initLogic({
   update({ game }) {
     if (game.step === Step.WRITE || game.step === Step.DRAW) {
       const countDown =
-        (countDowns[game.step] * 1000 - (Dusk.gameTime() - game.startTime)) /
+        (countDowns[game.step] * 1000 - (Rune.gameTime() - game.startTime)) /
         1000
       game.countDown = Math.max(countDown, 0)
     }

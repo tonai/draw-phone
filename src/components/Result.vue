@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import { PlayerId } from "dusk-games-sdk"
+import { PlayerId } from "rune-sdk"
 
 import { DrawRound, Step, WriteRound } from "../types"
 
@@ -13,7 +13,7 @@ const props = defineProps<{
   separator: boolean
 }>()
 
-const player = computed(() => Dusk.getPlayerInfo(props.playerId))
+const player = computed(() => Rune.getPlayerInfo(props.playerId))
 </script>
 
 <template>

@@ -6,7 +6,7 @@ import { Step } from "../types"
 
 const text = ref("")
 function write(enabled: boolean = false) {
-  Dusk.actions.write({ enabled, text: text.value })
+  Rune.actions.write({ enabled, text: text.value })
 }
 
 watch(countDown, () => {

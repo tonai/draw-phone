@@ -12,7 +12,7 @@ export function nextRound(game: GameState, step: Step.DRAW | Step.WRITE) {
     game.step = step
     game.playerReady = []
     game.countDown = countDowns[step]
-    game.startTime = Dusk.gameTime()
+    game.startTime = Rune.gameTime()
     if (step === Step.WRITE) {
       game.playerRounds[game.round] = Object.fromEntries(
         game.playerIds.map((id, i) => [

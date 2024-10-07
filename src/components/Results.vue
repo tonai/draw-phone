@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue"
-import { PlayerId } from "dusk-games-sdk"
+import { PlayerId } from "rune-sdk"
 
 import { playerIds, playerRounds } from "../store"
 import { DrawRound, WriteRound } from "../types"
@@ -50,7 +50,7 @@ onMounted(() => {
   const interval = setInterval(() => {
     if (renderedIndex.value === results.value.length) {
       clearInterval(interval)
-      Dusk.actions.gameOver()
+      Rune.actions.gameOver()
     } else {
       renderedIndex.value++
     }

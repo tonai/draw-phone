@@ -38,7 +38,7 @@ function handleClear() {
   if (tmp.value) {
     clear(tmp.value, lastNodes.value, lastDump.value, drauu.value)
   }
-  Dusk.actions.clear()
+  Rune.actions.clear()
 }
 
 function brush(mode: DrawingMode | "arrow") {

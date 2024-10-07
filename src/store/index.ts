@@ -82,7 +82,7 @@ export function syncDraw(done = false, enabled = false) {
       dump
     )
     if (diff.length > 0 || done) {
-      Dusk.actions.draw({ diff, done, enabled })
+      Rune.actions.draw({ diff, done, enabled })
     }
     lastNodes.value = nodes
     lastDump.value = dump

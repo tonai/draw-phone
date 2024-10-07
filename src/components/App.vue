@@ -24,7 +24,7 @@ import StartScreen from "./StartScreen.vue"
 import Write from "./Write.vue"
 
 onMounted(() => {
-  Dusk.initClient({
+  Rune.initClient({
     onChange: ({ game, yourPlayerId }) => {
       if (yourPlayerId && playerId.value !== yourPlayerId) {
         playerId.value = yourPlayerId

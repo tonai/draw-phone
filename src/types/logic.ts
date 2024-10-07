@@ -1,4 +1,4 @@
-import { DuskClient, PlayerId } from "dusk-games-sdk"
+import { RuneClient, PlayerId } from "rune-sdk"
 
 import { DiffAction } from "./draw"
 
@@ -51,5 +51,5 @@ type Persisted = {
 }
 
 declare global {
-  const Dusk: DuskClient<GameState, GameActions, Persisted>
+  const Rune: RuneClient<GameState, GameActions, Persisted>
 }
