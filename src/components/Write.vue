@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from "vue"
 
-import { countDown, disabled, prev, t } from "../store"
-import { Step } from "../types"
+import { countDown, disabled, mode, prev, t } from "../store"
+import { Mode, Step } from "../types"
 
 const text = ref("")
 function write(enabled: boolean = false) {
@@ -26,6 +26,7 @@ watch(countDown, () => {
       :disabled="disabled"
       autofocus
       class="textarea"
+      :class="{ blur: mode === Mode.SECRET }"
       maxlength="76"
       rows="2"
     ></textarea>
@@ -83,5 +84,9 @@ watch(countDown, () => {
   border-radius: 2vw;
   padding: 2vw;
   margin-bottom: 0.5vh;
+}
+.blur {
+  color: transparent;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 </style>

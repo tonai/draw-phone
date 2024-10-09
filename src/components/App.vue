@@ -6,6 +6,7 @@ import {
   countDown,
   isPlayer,
   locale,
+  mode,
   playerId,
   playerIds,
   playerReady,
@@ -13,6 +14,7 @@ import {
   round,
   step,
   t,
+  votes,
 } from "../store"
 import { Step } from "../types"
 
@@ -61,6 +63,12 @@ onMounted(() => {
       }
       if (playerRounds.value !== game.playerRounds) {
         playerRounds.value = game.playerRounds
+      }
+      if (votes.value !== game.votes) {
+        votes.value = game.votes
+      }
+      if (mode.value !== game.mode) {
+        mode.value = game.mode
       }
     },
   })

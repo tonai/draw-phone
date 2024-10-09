@@ -11,14 +11,14 @@ import {
   disabled,
   drauu,
   isDrawing,
+  mode,
   playerId,
   prev,
   svg,
   syncDraw,
   t,
-  tmp,
 } from "../store"
-import { Step } from "../types"
+import { Mode, Step } from "../types"
 
 const interval = ref<number>()
 
@@ -94,10 +94,10 @@ onMounted(() => {
         :class="{
           disabled: disabled,
           enabled: !disabled,
+          secret: mode === Mode.SECRET,
         }"
         viewBox="0 0 300 400"
       ></svg>
-      <svg ref="tmp" class="svg tmp" viewBox="0 0 300 400"></svg>
     </div>
   </div>
 </template>
@@ -129,8 +129,16 @@ onMounted(() => {
   max-height: 100%;
   position: absolute;
 }
-.tmp {
+.secret {
   background-color: transparent;
-  pointer-events: none;
+}
+.secret >>> path[data-drauu_index] {
+  animation: hide 1s both ease;
+}
+@keyframes hide {
+  100% {
+    fill: transparent;
+    stroke: transparent;
+  }
 }
 </style>

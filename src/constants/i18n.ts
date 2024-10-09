@@ -7,6 +7,8 @@ export const translations: Record<Locale, Record<string, string>> = {
     "Start a story": "Start a story",
     "It's time to draw:": "It's time to draw:",
     "Waiting for results": "Waiting for results",
+    Classic: "Classic",
+    Secret: "Secret",
   },
   fr: {
     Ready: "Prêt",
@@ -14,6 +16,8 @@ export const translations: Record<Locale, Record<string, string>> = {
     "Start a story": "Commencer une histoire",
     "It's time to draw:": "Il est temps de dessiner :",
     "Waiting for results": "En attente des résultats",
+    Classic: "Classique",
+    Secret: "Secret",
   },
   ru: {
     Ready: "Готовый",
@@ -21,6 +25,8 @@ export const translations: Record<Locale, Record<string, string>> = {
     "Start a story": "Начать историю",
     "It's time to draw:": "Пришло время рисовать:",
     "Waiting for results": "Жду результатов",
+    Classic: "Классический",
+    Secret: "Секретный",
   },
   es: {
     Ready: "Listo",
@@ -28,6 +34,8 @@ export const translations: Record<Locale, Record<string, string>> = {
     "Start a story": "Iniciar una historia",
     "It's time to draw:": "Es hora de dibujar:",
     "Waiting for results": "Esperando resultados",
+    Classic: "Clásico",
+    Secret: "Secreto",
   },
   pt: {
     Ready: "Preparar",
@@ -35,6 +43,8 @@ export const translations: Record<Locale, Record<string, string>> = {
     "Start a story": "Começar uma história",
     "It's time to draw:": "Está na hora de desenhar:",
     "Waiting for results": "Esperança para resultados",
+    Classic: "Clássico",
+    Secret: "Secreto",
   },
   cn: {
     Ready: "准备好",
@@ -42,5 +52,7 @@ export const translations: Record<Locale, Record<string, string>> = {
     "Start a story": "开始一个故事",
     "It's time to draw:": "现在是绘画时间了：",
     "Waiting for results": "等待结果",
+    Classic: "经典",
+    Secret: "秘密",
   },
 }

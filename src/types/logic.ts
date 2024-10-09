@@ -9,6 +9,11 @@ export enum Step {
   WRITE = "write",
 }
 
+export enum Mode {
+  CLASSIC = "Classic",
+  SECRET = "Secret",
+}
+
 export interface Round {
   done: boolean
   next?: PlayerId
@@ -29,12 +34,14 @@ export type PlayerRounds = Record<PlayerId, DrawRound | WriteRound>[]
 
 export interface GameState {
   countDown: number
+  mode: Mode
   playerIds: PlayerId[]
   playerReady: PlayerId[]
   playerRounds: PlayerRounds
   round: number
   startTime: number
   step: Step
+  votes: Record<PlayerId, Mode | undefined>
 }
 
 type GameActions = {
@@ -43,7 +50,7 @@ type GameActions = {
   gameOver: () => void
   selectLocale: (locale: string) => void
   write: (data: { enabled: boolean; text: string }) => void
-  ready: () => void
+  ready: (vote: Mode) => void
 }
 
 type Persisted = {

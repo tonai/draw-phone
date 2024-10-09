@@ -10,7 +10,7 @@ import Pt from "../components/icon/Pt.vue"
 import Ru from "../components/icon/Ru.vue"
 import Uk from "../components/icon/Uk.vue"
 import { getDiff } from "../helpers"
-import { PlayerRounds, Step } from "../types"
+import { Mode, PlayerRounds, Step } from "../types"
 
 export const locales: Record<string, Component> = {
   en: Uk,
@@ -41,9 +41,11 @@ export const canRedo = ref(false)
 export const isDrawing = ref(false)
 
 export const step = ref(Step.WAIT)
+export const mode = ref(Mode.CLASSIC)
 export const playerId = ref("")
 export const playerIds = ref<string[]>([])
 export const playerReady = ref<string[]>([])
+export const votes = ref<Record<string, Mode | undefined>>({})
 
 export const round = ref(0)
 export const playerRounds = ref<PlayerRounds>([])
@@ -53,7 +55,6 @@ export const activeColor = ref<string>("#000000")
 export const activeSize = ref<number>(6)
 
 export const svg = ref<SVGSVGElement>()
-export const tmp = ref<SVGSVGElement>()
 export const lastTime = ref<Record<string, number>>({})
 export const lastDump = ref<string[]>([])
 export const lastNodes = ref<SVGElement[]>([])

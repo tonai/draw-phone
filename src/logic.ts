@@ -1,6 +1,7 @@
+import { votesArray } from "@tonai/game-utils/server"
 import { countDowns } from "./constants"
 import { nextRound } from "./logic/rounds"
-import { Action, DrawRound, Step, WriteRound } from "./types"
+import { Action, DrawRound, Mode, Step, WriteRound } from "./types"
 
 Rune.initLogic({
   minPlayers: 2,
@@ -10,12 +11,14 @@ Rune.initLogic({
   updatesPerSecond: 10,
   setup: (allPlayerIds) => ({
     countDown: 0,
+    mode: Mode.CLASSIC,
     playerIds: allPlayerIds,
     playerReady: [],
     playerRounds: [],
     round: -1,
     startTime: 0,
     step: Step.WAIT,
+    votes: {},
   }),
   actions: {
     clear(_, { game, playerId }) {
@@ -69,19 +72,19 @@ Rune.initLogic({
         players: Object.fromEntries(allPlayerIds.map((id) => [id, "WON"])),
       })
     },
-    ready(_, { game, playerId }) {
+    ready(vote: Mode, { game, playerId }) {
       if (game.step !== Step.WAIT) {
         return Rune.invalidAction()
       }
-      const index = game.playerReady.indexOf(playerId)
-      if (index !== -1) {
-        game.playerReady.splice(index, 1)
+      if (game.votes[playerId] === vote) {
+        game.votes[playerId] = undefined
       } else {
-        game.playerReady.push(playerId)
-        if (game.playerReady.length === game.playerIds.length) {
-          // Start writing first idea
-          nextRound(game, Step.WRITE)
-        }
+        game.votes[playerId] = vote
+      }
+      const votes = Object.values(game.votes).filter((mode) => mode) as Mode[]
+      if (votes.length === game.playerIds.length) {
+        game.mode = votesArray(votes)
+        nextRound(game, Step.WRITE)
       }
     },
     selectLocale(locale: string, { game, playerId }) {

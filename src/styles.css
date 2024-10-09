@@ -117,7 +117,7 @@ textarea {
   z-index: 1;
 }
 .button-lg {
-  font-size: calc(var(--font-size) * 1.5);
+  font-size: calc(var(--font-size) * 1.2);
   border-radius: 3vw;
   animation: pulse 2s linear infinite;
 }

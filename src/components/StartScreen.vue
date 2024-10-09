@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { computed, ref } from "vue"
 
 import top from "../assets/top-full.webp"
 import bottom from "../assets/bottom-full.webp"
@@ -9,13 +9,25 @@ import {
   locales,
   playerId,
   playerIds,
-  playerReady,
   t,
+  votes,
 } from "../store"
+import { Mode } from "../types"
 
 import Avatar from "./Avatar.vue"
 
 const opened = ref(false)
+const playersByMode = computed(() =>
+  Object.entries(votes.value).reduce<Record<Mode, string[]>>(
+    (acc, [id, vote]) => {
+      if (vote) {
+        acc[vote].push(id)
+      }
+      return acc
+    },
+    { [Mode.CLASSIC]: [], [Mode.SECRET]: [] }
+  )
+)
 
 function open() {
   opened.value = true
@@ -34,8 +46,8 @@ function select(language: Locale) {
   opened.value = false
 }
 
-function ready() {
-  Rune.actions.ready()
+function ready(mode: Mode) {
+  Rune.actions.ready(mode)
 }
 </script>
 
@@ -65,17 +77,37 @@ function ready() {
       </text>
     </svg>
     <div class="players">
-      <Avatar v-for="id of playerIds" :id="id" :key="id" name class="player" />
+      <Avatar
+        v-for="id of playerIds"
+        :id="id"
+        :key="id"
+        border
+        name
+        class="player"
+      />
     </div>
-    <button
-      v-if="playerId"
-      class="button button-lg"
-      :class="{ selected: playerReady.includes(playerId) }"
-      type="button"
-      @click="ready"
-    >
-      {{ t("Ready") }}
-    </button>
+    <div v-if="playerId" class="modes">
+      <div v-for="mode of Mode" :key="mode" class="mode">
+        <div class="mode-button">
+          <button
+            class="button button-lg"
+            :class="{ selected: votes[playerId] === mode }"
+            type="button"
+            @click="ready(mode)"
+          >
+            {{ t(mode) }}
+          </button>
+        </div>
+        <div class="mode-avatars">
+          <Avatar
+            v-for="id of playersByMode[mode]"
+            :id="id"
+            :key="id"
+            class="mode-avatar"
+          />
+        </div>
+      </div>
+    </div>
   </div>
   <div v-if="opened" class="modal" @click="close">
     <div class="modal-content" @click="stop">
@@ -99,14 +131,14 @@ function ready() {
   justify-content: space-between;
   align-items: center;
   margin: auto;
-  height: 92vh;
+  height: 96vh;
   width: 100%;
 }
 .logo {
   flex-shrink: 1;
   height: 30vh;
   position: relative;
-  margin-top: 3vh;
+  margin-top: 1vh;
 }
 .bottom {
   max-width: 100%;
@@ -182,7 +214,7 @@ function ready() {
   align-items: center;
   gap: 3vw;
   align-self: flex-end;
-  margin-right: 4vh;
+  margin-right: 2vh;
   position: absolute;
 }
 .button-flags:after {
@@ -207,6 +239,39 @@ function ready() {
   min-width: 0;
   min-height: 0;
   height: 100%;
+}
+.modes {
+  display: table;
+  width: 100%;
+}
+.mode {
+  display: table-row;
+}
+.mode-button {
+  display: table-cell;
+  width: 55vw;
+  padding: 1vh 5vw 1vh 0;
+  text-align: right;
+}
+.mode-avatars {
+  display: table-cell;
+  width: 40vw;
+  padding: 1vh 0;
+  vertical-align: middle;
+}
+.mode-avatar {
+  width: 7vw;
+  animation: 200ms ease-in both slide-down;
+}
+@keyframes slide-down {
+  0% {
+    translate: 0 -100%;
+    opacity: 0;
+  }
+  100% {
+    translate: 0 0;
+    opacity: 1;
+  }
 }
 .modal {
   position: absolute;

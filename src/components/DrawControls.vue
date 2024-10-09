@@ -13,7 +13,6 @@ import {
   lastDump,
   lastNodes,
   syncDraw,
-  tmp,
 } from "../store"
 
 import Arrow from "./icon/Arrow.vue"
@@ -35,9 +34,7 @@ function redo() {
 }
 
 function handleClear() {
-  if (tmp.value) {
-    clear(tmp.value, lastNodes.value, lastDump.value, drauu.value)
-  }
+  clear(lastNodes.value, lastDump.value, drauu.value)
   Rune.actions.clear()
 }
 

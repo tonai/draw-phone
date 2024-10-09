@@ -3,6 +3,7 @@ import { Player, PlayerId } from "rune-sdk"
 import { computed } from "vue"
 
 const props = defineProps<{
+  border?: boolean
   id?: PlayerId
   name?: boolean
   player?: Player
@@ -16,7 +17,7 @@ const player = computed(
 <template>
   <div class="avatar">
     <div class="wrapper">
-      <img class="image" :src="player.avatarUrl" />
+      <img class="image" :class="{ border }" :src="player.avatarUrl" />
     </div>
     <div v-if="name" class="name">{{ player.displayName }}</div>
   </div>
@@ -37,7 +38,6 @@ const player = computed(
 }
 .image {
   display: block;
-  border: min(1vw, 0.5vh) solid var(--border-color);
   border-radius: 50%;
   background-color: var(--border-color);
   box-sizing: border-box;
@@ -47,6 +47,9 @@ const player = computed(
   aspect-ratio: 1 / 1;
   left: 50%;
   translate: -50% 0;
+}
+.border {
+  border: min(1vw, 0.5vh) solid var(--border-color);
 }
 .name {
   text-align: center;

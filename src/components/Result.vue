@@ -23,7 +23,7 @@ const player = computed(() => Rune.getPlayerInfo(props.playerId))
     </td>
   </tr>
   <tr class="line">
-    <td class="avatar cell"><Avatar :player="player" /></td>
+    <td class="avatar cell"><Avatar border :player="player" /></td>
     <td class="cell">
       <div class="box say">
         <Appear>
