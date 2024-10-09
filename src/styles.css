@@ -121,6 +121,9 @@ textarea {
   border-radius: 3vw;
   animation: pulse 2s linear infinite;
 }
+.button-lg.selected {
+  animation: none;
+}
 .button-sm {
   font-size: calc(var(--font-size) * 1.5);
   padding: 2vw;

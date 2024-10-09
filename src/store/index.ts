@@ -21,7 +21,13 @@ export const locales: Record<string, Component> = {
   cn: Cn,
 }
 export type Locale = keyof typeof locales
-export const locale = ref<Locale>("en")
+
+const preferred = [
+  ...new Set(navigator.languages.map((language) => language.split("-")[0])),
+]
+export const locale = ref<Locale>(
+  Object.keys(locales).find((locale) => preferred.includes(locale)) ?? "en"
+)
 export const translator = createTranslator(translations)
 export function t(word: string) {
   return translator(locale.value)(word)
