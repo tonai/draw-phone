@@ -1,8 +1,14 @@
 <template>
-  <svg class="draw-icon" viewBox="0 0 32 32">
-    <path
-      fill="currentColor"
-      d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2M6 26V6h20v20Z"
-    ></path>
+  <svg class="draw-icon" viewBox="0 0 12 12">
+    <rect
+      x="1"
+      y="1"
+      width="10"
+      height="10"
+      rx="1"
+      stroke="currentColor"
+      stroke-width="2"
+      fill="none"
+    />
   </svg>
 </template>

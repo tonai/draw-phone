@@ -69,6 +69,8 @@ const player = computed(() => Rune.getPlayerInfo(props.playerId))
 .inner {
   width: 74vw;
   line-height: 6vw;
+  font-size: 80%;
+  word-break: break-all;
 }
 .svg {
   width: 100%;

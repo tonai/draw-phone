@@ -7,12 +7,10 @@ import {
   activeSize,
   canRedo,
   canUndo,
-  disabled,
   drauu,
   isDrawing,
   lastDump,
   lastNodes,
-  syncDraw,
 } from "../store"
 
 import Arrow from "./icon/Arrow.vue"
@@ -68,16 +66,48 @@ function size(size: number) {
 
 <template>
   <div class="controls">
-    <div class="column">
-      <div
-        class="selected-color"
-        :style="{ backgroundColor: activeColor }"
-      ></div>
+    <div class="sizes">
+      <button
+        :disabled="isDrawing"
+        class="size size--xl"
+        :class="{ active: activeSize === 40, white: activeColor === '#ffffff' }"
+        :style="{ color: activeColor }"
+        aria-label="Extra Large"
+        title="Extra Large"
+        @click="size(40)"
+      ></button>
+      <button
+        :disabled="isDrawing"
+        class="size size--large"
+        :class="{ active: activeSize === 12, white: activeColor === '#ffffff' }"
+        :style="{ color: activeColor }"
+        aria-label="Large"
+        title="Large"
+        @click="size(12)"
+      ></button>
+      <button
+        :disabled="isDrawing"
+        class="size size--medium"
+        :class="{ active: activeSize === 6, white: activeColor === '#ffffff' }"
+        :style="{ color: activeColor }"
+        aria-label="Medium"
+        title="Medium"
+        @click="size(6)"
+      ></button>
+      <button
+        :disabled="isDrawing"
+        class="size size--small left"
+        :class="{ active: activeSize === 2, white: activeColor === '#ffffff' }"
+        :style="{ color: activeColor }"
+        aria-label="Small"
+        title="Small"
+        @click="size(2)"
+      ></button>
     </div>
     <div class="colors">
       <button
         :disabled="isDrawing"
-        class="color"
+        class="color white"
         :class="{ active: activeColor === '#ffffff' }"
         style="background-color: #ffffff"
         aria-label="White"
@@ -128,51 +158,6 @@ function size(size: number) {
         aria-label="Green"
         title="Green"
         @click="color('#00cc00')"
-      ></button>
-      <button
-        :disabled="isDrawing"
-        class="color"
-        :class="{ active: activeColor === '#00b2ff' }"
-        style="background-color: #00b2ff"
-        aria-label="Blue"
-        title="Blue"
-        @click="color('#00b2ff')"
-      ></button>
-      <button
-        :disabled="isDrawing"
-        class="color"
-        :class="{ active: activeColor === '#231fd3' }"
-        style="background-color: #231fd3"
-        aria-label="Blue"
-        title="Blue"
-        @click="color('#231fd3')"
-      ></button>
-      <button
-        :disabled="isDrawing"
-        class="color"
-        :class="{ active: activeColor === '#a300ba' }"
-        style="background-color: #a300ba"
-        aria-label="Purple"
-        title="Purple"
-        @click="color('#a300ba')"
-      ></button>
-      <button
-        :disabled="isDrawing"
-        class="color"
-        :class="{ active: activeColor === '#d37caa' }"
-        style="background-color: #d37caa"
-        aria-label="Pink"
-        title="Pink"
-        @click="color('#d37caa')"
-      ></button>
-      <button
-        :disabled="isDrawing"
-        class="color"
-        :class="{ active: activeColor === '#a0522d' }"
-        style="background-color: #a0522d"
-        aria-label="Brown"
-        title="Brown"
-        @click="color('#a0522d')"
       ></button>
 
       <button
@@ -228,6 +213,71 @@ function size(size: number) {
         aria-label="Dark Green"
         title="Dark Green"
         @click="color('#005510')"
+      ></button>
+
+      <button
+        :disabled="isDrawing"
+        class="color"
+        :class="{ active: activeColor === '#1cc5ac' }"
+        style="background-color: #1cc5ac"
+        aria-label="Blue green"
+        title="Blue green"
+        @click="color('#1cc5ac')"
+      ></button>
+      <button
+        :disabled="isDrawing"
+        class="color"
+        :class="{ active: activeColor === '#00b2ff' }"
+        style="background-color: #00b2ff"
+        aria-label="Blue"
+        title="Blue"
+        @click="color('#00b2ff')"
+      ></button>
+      <button
+        :disabled="isDrawing"
+        class="color"
+        :class="{ active: activeColor === '#231fd3' }"
+        style="background-color: #231fd3"
+        aria-label="Blue"
+        title="Blue"
+        @click="color('#231fd3')"
+      ></button>
+      <button
+        :disabled="isDrawing"
+        class="color"
+        :class="{ active: activeColor === '#a300ba' }"
+        style="background-color: #a300ba"
+        aria-label="Purple"
+        title="Purple"
+        @click="color('#a300ba')"
+      ></button>
+      <button
+        :disabled="isDrawing"
+        class="color"
+        :class="{ active: activeColor === '#d37caa' }"
+        style="background-color: #d37caa"
+        aria-label="Pink"
+        title="Pink"
+        @click="color('#d37caa')"
+      ></button>
+      <button
+        :disabled="isDrawing"
+        class="color"
+        :class="{ active: activeColor === '#a0522d' }"
+        style="background-color: #a0522d"
+        aria-label="Brown"
+        title="Brown"
+        @click="color('#a0522d')"
+      ></button>
+
+      <button
+        :disabled="isDrawing"
+        class="color"
+        :class="{ active: activeColor === '#0c6759' }"
+        style="background-color: #0c6759"
+        aria-label="Dark Blue green"
+        title="Dark Blue green"
+        @click="color('#0c6759')"
       ></button>
       <button
         :disabled="isDrawing"
@@ -336,43 +386,6 @@ function size(size: number) {
       >
         <Eraser />
       </button>
-    </div>
-    <div class="sizes">
-      <button
-        :disabled="isDrawing"
-        class="size size--small left"
-        :class="{ active: activeSize === 2 }"
-        aria-label="Small"
-        title="Small"
-        @click="size(2)"
-      ></button>
-      <button
-        :disabled="isDrawing"
-        class="size size--medium"
-        :class="{ active: activeSize === 6 }"
-        aria-label="Medium"
-        title="Medium"
-        @click="size(6)"
-      ></button>
-      <button
-        :disabled="isDrawing"
-        class="size size--large"
-        :class="{ active: activeSize === 12 }"
-        aria-label="Large"
-        title="Large"
-        @click="size(12)"
-      ></button>
-      <button
-        :disabled="isDrawing"
-        class="size size--xl"
-        :class="{ active: activeSize === 40 }"
-        aria-label="Extra Large"
-        title="Extra Large"
-        @click="size(40)"
-      ></button>
-    </div>
-
-    <div class="actions">
       <button
         :disabled="isDrawing || !canUndo"
         class="brush"
@@ -401,62 +414,33 @@ function size(size: number) {
         <Clear />
       </button>
     </div>
-
-    <div class="validate">
-      <button
-        class="button button-sm"
-        :class="{ selected: disabled }"
-        type="button"
-        @click="syncDraw(true, disabled)"
-      >
-        ✓
-      </button>
-    </div>
   </div>
 </template>
 
 <style scoped>
 .controls {
-  --size: 7vw;
+  --size: 8vw;
   --margin: 1vw;
   --spacing: 0.5vh;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
-  padding: 0;
+  justify-content: space-evenly;
+  padding: 1vh 0;
   position: relative;
   z-index: 1;
-  width: calc(var(--size) * 13 + var(--margin) + 4px);
-  margin: var(--spacing) auto 1.5vh;
 }
-.controls > * {
-  position: relative;
-}
-.column {
+.sizes {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-right: var(--margin);
+  width: var(--size);
 }
-.button {
-  margin: auto;
-}
-.selected-color {
-  width: calc(var(--size) * 2);
-  height: calc(var(--size) * 2);
-  border-radius: 50%;
-  border: 1px solid var(--border-color);
-}
-.size,
-.color,
-.brush {
+.size {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--size);
-  height: var(--size);
+  width: calc(var(--size) * 0.9);
+  height: calc(var(--size) * 0.9);
   padding: 0;
   margin: 0;
   border: 0;
@@ -465,86 +449,101 @@ function size(size: number) {
   background-color: transparent;
   transition: background-color 400ms ease;
 }
-.active {
-  background-color: var(--selected-color);
+.size:before {
+  outline: 1px solid white;
 }
-.colors,
-.brushes,
-.sizes,
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  border: 1px solid var(--border-color);
-  border-radius: 2vw;
-  overflow: hidden;
-  background-color: white;
+.size.white:before {
+  outline: 1px solid black;
 }
-.brushes,
-.sizes {
-  margin-top: var(--spacing);
-  margin-left: calc(var(--size) * 2 + var(--margin) + 2px);
+.size.active:before {
+  outline: 3px solid white;
 }
-.colors {
-  width: calc(var(--size) * 11);
-}
-.actions {
-  position: absolute;
-  right: 0;
-  bottom: calc((var(--size) + var(--margin) + 2px) / 2);
+.size.active.white:before {
+  outline: 3px solid black;
 }
 .size--small:before {
   content: "";
   display: block;
-  height: 20%;
-  width: 20%;
-  background-color: black;
+  height: 40%;
+  width: 40%;
+  background-color: currentColor;
   border-radius: 50%;
 }
 .size--medium:before {
   content: "";
   display: block;
-  height: 40%;
-  width: 40%;
-  background-color: black;
+  height: 60%;
+  width: 60%;
+  background-color: currentColor;
   border-radius: 50%;
 }
 .size--large:before {
   content: "";
   display: block;
-  height: 60%;
-  width: 60%;
-  background-color: black;
+  height: 80%;
+  width: 80%;
+  background-color: currentColor;
   border-radius: 50%;
 }
 .size--xl:before {
   content: "";
   display: block;
-  height: 90%;
-  width: 90%;
-  background-color: black;
+  height: 100%;
+  width: 100%;
+  background-color: currentColor;
   border-radius: 50%;
 }
-.brush.clear {
-  margin-left: 4vw;
-  position: relative;
+.colors {
+  --color-size: calc(var(--size) * 0.8);
+  display: grid;
+  grid-template-rows: repeat(4, var(--color-size));
+  grid-template-columns: repeat(6, var(--color-size));
+  gap: 1vw;
 }
-.brush.clear:before {
-  content: "";
-  position: absolute;
-  left: -2vw;
-  top: 10%;
-  bottom: 10%;
-  width: 2px;
-  background-color: lightgrey;
-}
-.validate {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: calc(var(--size) * 2);
-  height: calc(var(--size) * 2);
+.color {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: var(--color-size);
+  height: var(--color-size);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  font-size: inherit;
+  background-color: transparent;
+  transition: background-color 400ms ease;
+  border: 1px solid white;
+  border-radius: 0.5vw;
+}
+.color.active {
+  outline: 3px solid white;
+}
+.color.active.white {
+  outline: 3px solid black;
+}
+.brushes {
+  display: grid;
+  grid-template-rows: repeat(3, var(--size));
+  grid-template-columns: repeat(3, var(--size));
+  gap: 1vw;
+}
+.brush {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size);
+  height: var(--size);
+  padding: 1vw;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  font-size: inherit;
+  background-color: white;
+  transition: background-color 400ms ease;
+  border-radius: 0.5vw;
+}
+.brush.active {
+  background-color: var(--selected-color);
 }
 </style>

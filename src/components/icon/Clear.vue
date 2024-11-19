@@ -1,9 +1,12 @@
 <template>
-  <svg class="draw-icon" viewBox="0 0 32 32">
-    <path fill="currentColor" d="M12 12h2v12h-2zm6 0h2v12h-2z"></path>
+  <svg class="draw-icon" viewBox="0 0 15 16">
     <path
-      fill="currentColor"
-      d="M4 6v2h2v20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8h2V6zm4 22V8h16v20zm4-26h8v2h-8z"
-    ></path>
+      d="M1 3.8H2.4M2.4 3.8H13.6M2.4 3.8V13.6C2.4 13.9713 2.5475 14.3274 2.81005 14.5899C3.0726 14.8525 3.4287 15 3.8 15H10.8C11.1713 15 11.5274 14.8525 11.7899 14.5899C12.0525 14.3274 12.2 13.9713 12.2 13.6V3.8H2.4ZM4.5 3.8V2.4C4.5 2.0287 4.6475 1.6726 4.91005 1.41005C5.1726 1.1475 5.5287 1 5.9 1H8.7C9.0713 1 9.4274 1.1475 9.68995 1.41005C9.9525 1.6726 10.1 2.0287 10.1 2.4V3.8M5.9 7.3V11.5M8.7 7.3V11.5"
+      stroke="currentColor"
+      stroke-width="1.25"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
   </svg>
 </template>

@@ -3,6 +3,7 @@ import { ref, watch } from "vue"
 
 import { countDown, disabled, mode, prev, t } from "../store"
 import { Mode, Step } from "../types"
+import CheckMark from "./icon/CheckMark.vue"
 
 const text = ref("")
 function write(enabled: boolean = false) {
@@ -36,7 +37,7 @@ watch(countDown, () => {
       type="button"
       @click="write(disabled)"
     >
-      ✓
+      <CheckMark />
     </button>
     <div class="box" :class="{ invisible: !(prev && prev.type === Step.DRAW) }">
       <svg

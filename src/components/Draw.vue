@@ -19,6 +19,7 @@ import {
   t,
 } from "../store"
 import { Mode, Step } from "../types"
+import CheckMark from "./icon/CheckMark.vue"
 
 const interval = ref<number>()
 
@@ -83,8 +84,18 @@ onMounted(() => {
 
 <template>
   <div v-if="prev && prev.type === Step.WRITE" class="box">
-    {{ t("It's time to draw:") }}<br />
-    {{ prev.text }}
+    <div class="text">
+      <span class="dimmed">{{ t("It's time to draw:") }}</span>&nbsp;
+      <strong>{{ prev.text }}</strong>
+    </div>
+    <button
+      class="button button-sm"
+      :class="{ selected: disabled }"
+      type="button"
+      @click="syncDraw(true, disabled)"
+    >
+      <CheckMark />
+    </button>
   </div>
   <div class="draw">
     <div class="container">
@@ -106,6 +117,18 @@ onMounted(() => {
 .box {
   margin: 0 2vw 0.5vh;
   padding: 1vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.text {
+  font-family: arial;
+  font-size: 100%;
+  word-break: break-all;
+  margin-right: 1vw;
+}
+.dimmed {
+  opacity: 0.8;
 }
 .draw {
   flex: 1;
@@ -113,7 +136,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background-color: var(--border-color);
+  margin: 0 2vw;
 }
 .container {
   position: absolute;
@@ -128,6 +151,8 @@ onMounted(() => {
   max-width: 100%;
   max-height: 100%;
   position: absolute;
+  overflow: hidden;
+  border-radius: 2vw;
 }
 .secret {
   background-color: transparent;

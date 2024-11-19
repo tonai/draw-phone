@@ -52,6 +52,7 @@ const rendererResults = computed(() =>
 )
 
 onMounted(() => {
+  console.log('again')
   const interval = setInterval(() => {
     if (renderedIndex.value === results.value.length) {
       clearInterval(interval)

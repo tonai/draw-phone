@@ -1,9 +1,9 @@
 :root {
   --bg-color: #3bbbf5;
   --bg-color-2: #2fabe3;
-  --bg-size: 5px;
+  --bg-size: 50vw;
   --bg-angle: 45deg;
-  --selected-color: #00ffff;
+  --selected-color: #75FB4C;
   --border-color: #026175;
   --font-size: min(4vw, 2vh);
 }
@@ -14,19 +14,13 @@ body {
   overflow-x: hidden;
   font-family: arial, sans-serif;
   font-size: var(--font-size);
-  background-image: repeating-linear-gradient(
-    var(--bg-angle),
-    var(--bg-color),
-    var(--bg-color) var(--bg-size),
-    var(--bg-color-2) var(--bg-size),
-    var(--bg-color-2) calc(var(--bg-size) * 2)
-  );
-  background-size: calc(var(--bg-size) * 2 / sin(var(--bg-angle))) 100%;
-  animation: bg 1s linear infinite reverse;
+  background: url('background.svg');
+  background-size: var(--bg-size);
+  animation: bg 10s linear infinite reverse;
 }
 @keyframes bg {
   0% {
-    background-position: calc(var(--bg-size) * 2 / sin(var(--bg-angle))) 0;
+    background-position: var(--bg-size) calc(var(--bg-size) * -1);
   }
 }
 #app {
@@ -63,6 +57,7 @@ button {
 textarea {
   font-family: monospace;
   font-size: 4vw;
+  word-break: break-all;
 }
 .say {
   margin-left: 2vw;
@@ -89,7 +84,7 @@ textarea {
   position: relative;
   overflow: hidden;
 }
-.button:before {
+.button:not(.selected):before {
   content: '';
   position: absolute;
   width: 8vw;
@@ -121,16 +116,21 @@ textarea {
   border-radius: 3vw;
   animation: pulse 2s linear infinite;
 }
-.button-lg.selected {
-  animation: none;
-}
 .button-sm {
   font-size: calc(var(--font-size) * 1.5);
   padding: 2vw;
   line-height: 4vw;
   min-width: calc(8vw + 4px);
+  height: 9vw;
+  width: 9vw;
+  padding: 0;
+  border-radius: 5vw;
 }
-.button-sm:before {
+.button-sm svg {
+  width: 70%;
+  color: currentColor;
+}
+.button-sm:not(.selected):before {
   animation: 10s ease-in infinite both shine-sm;
 }
 @keyframes shine-sm {
@@ -160,6 +160,7 @@ textarea {
   background-color: var(--border-color);
   color: white;
   border-color: white;
+  animation: none;
 }
 .button.selected:hover,
 .button.selected:active {
