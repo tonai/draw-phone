@@ -388,7 +388,7 @@ function size(size: number) {
       </button>
       <button
         :disabled="isDrawing || !canUndo"
-        class="brush"
+        class="brush undo"
         aria-label="Undo"
         title="Undo"
         @click="undo"
@@ -397,7 +397,7 @@ function size(size: number) {
       </button>
       <button
         :disabled="isDrawing || !canRedo"
-        class="brush"
+        class="brush redo"
         aria-label="Redo"
         title="Redo"
         @click="redo"
@@ -545,5 +545,9 @@ function size(size: number) {
 }
 .brush.active {
   background-color: var(--selected-color);
+}
+.undo:disabled,
+.redo:disabled {
+  opacity: 0.5;
 }
 </style>
