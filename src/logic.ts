@@ -66,10 +66,10 @@ Rune.initLogic({
         }
       }
     },
-    gameOver(_, { allPlayerIds }) {
+    gameOver(_, { game }) {
       Rune.gameOver({
         minimizePopUp: true,
-        players: Object.fromEntries(allPlayerIds.map((id) => [id, "WON"])),
+        players: Object.fromEntries(game.playerIds.map((id) => [id, "WON"])),
       })
     },
     ready(vote: Mode, { game, playerId }) {
@@ -127,15 +127,11 @@ Rune.initLogic({
       if (game.step === Step.WAIT) {
         game.playerIds.push(playerId)
       } else {
-        // Spectator (TODO)
+        // Spectator
       }
     },
     playerLeft(playerId, { game }) {
-      if (game.step === Step.WAIT) {
-        game.playerIds.splice(game.playerIds.indexOf(playerId), 1)
-      } else {
-        // If a player left during the game (TODO)
-      }
+      game.playerIds.splice(game.playerIds.indexOf(playerId), 1)
     },
   },
 })

@@ -16,9 +16,10 @@ const results = computed(() => {
     result: DrawRound | WriteRound
     separator: boolean
   }[] = []
-  for (let i = 0; i < playerIds.value.length; i++) {
+  const players = Object.keys(playerRounds.value[0])
+  for (let i = 0; i < players.length; i++) {
     let round = 0
-    let playerId = playerIds.value[i]
+    let playerId = players[i]
     let result = playerRounds.value?.[round]?.[playerId]
     if (result) {
       results.push({

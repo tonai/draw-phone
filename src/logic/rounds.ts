@@ -3,7 +3,7 @@ import { countDowns } from "../constants"
 import { GameState, Step } from "../types"
 
 export function nextRound(game: GameState, step: Step.DRAW | Step.WRITE) {
-  if (game.round === game.playerIds.length - 1) {
+  if (game.round >= game.playerIds.length - 1) {
     // Results
     game.step = Step.RESULTS
   } else {
