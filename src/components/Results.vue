@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from "vue"
 import { PlayerId } from "rune-sdk"
 
-import { playerIds, playerRounds } from "../store"
+import { playerRounds } from "../store"
 import { DrawRound, WriteRound } from "../types"
 
 import Result from "./Result.vue"
@@ -52,7 +52,7 @@ const rendererResults = computed(() =>
 )
 
 onMounted(() => {
-  console.log('again')
+  console.log("again")
   const interval = setInterval(() => {
     if (renderedIndex.value === results.value.length) {
       clearInterval(interval)

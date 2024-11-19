@@ -85,7 +85,8 @@ onMounted(() => {
 <template>
   <div v-if="prev && prev.type === Step.WRITE" class="box">
     <div class="text">
-      <span class="dimmed">{{ t("It's time to draw:") }}</span>&nbsp;
+      <span class="dimmed">{{ t("It's time to draw:") }}</span
+      >&nbsp;
       <strong>{{ prev.text }}</strong>
     </div>
     <button
