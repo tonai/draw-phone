@@ -19,23 +19,27 @@ const results = computed(() => {
   for (let i = 0; i < playerIds.value.length; i++) {
     let round = 0
     let playerId = playerIds.value[i]
-    let result = playerRounds.value[round][playerId]
-    results.push({
-      id: `${i}-${playerId}`,
-      playerId,
-      result,
-      separator: i !== 0,
-    })
-    while (result.next) {
-      round++
-      playerId = result.next
-      result = playerRounds.value[round][playerId]
+    let result = playerRounds.value?.[round]?.[playerId]
+    if (result) {
       results.push({
         id: `${i}-${playerId}`,
         playerId,
         result,
-        separator: false,
+        separator: i !== 0,
       })
+    }
+    while (result.next) {
+      round++
+      playerId = result.next
+      result = playerRounds.value?.[round]?.[playerId]
+      if (result) {
+        results.push({
+          id: `${i}-${playerId}`,
+          playerId,
+          result,
+          separator: false,
+        })
+      }
     }
   }
   return results
