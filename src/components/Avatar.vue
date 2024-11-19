@@ -34,7 +34,7 @@ const player = computed(
   aspect-ratio: 1 / 1;
   position: relative;
   width: 100%;
-  max-width: 30vw;
+  max-width: 15vw;
 }
 .image {
   display: block;
