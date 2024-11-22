@@ -249,8 +249,8 @@ function ready(mode: Mode) {
 }
 .mode-button {
   display: table-cell;
-  width: 55vw;
-  padding: 1vh 5vw 1vh 0;
+  width: 60vw;
+  padding: 1vh 4vw 1vh 0;
   text-align: right;
 }
 .mode-avatars {
