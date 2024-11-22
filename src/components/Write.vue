@@ -10,6 +10,13 @@ function write(enabled: boolean = false) {
   Rune.actions.write({ enabled, text: text.value })
 }
 
+function handleKeyDown(event: KeyboardEvent) {
+  if (event.key === "Enter") {
+    event.preventDefault()
+    Rune.actions.write({ enabled: false, text: text.value })
+  }
+}
+
 watch(countDown, () => {
   if (countDown.value === 0) {
     write()
@@ -22,23 +29,25 @@ watch(countDown, () => {
     <div class="title">
       {{ prev ? t("Describe the scene") : `${t("Start a story")}...` }}
     </div>
-    <textarea
-      v-model="text"
-      :disabled="disabled"
-      autofocus
-      class="textarea"
-      :class="{ blur: mode === Mode.SECRET }"
-      maxlength="76"
-      rows="2"
-    ></textarea>
-    <button
-      class="button button-sm"
-      :class="{ selected: disabled }"
-      type="button"
-      @click="write(disabled)"
-    >
-      <CheckMark />
-    </button>
+    <form class="form" @submit.prevent="write(disabled)">
+      <textarea
+        v-model="text"
+        :disabled="disabled"
+        autofocus
+        class="textarea"
+        :class="{ blur: mode === Mode.SECRET }"
+        maxlength="76"
+        rows="2"
+        @keydown="handleKeyDown"
+      ></textarea>
+      <button
+        class="button button-sm"
+        :class="{ selected: disabled }"
+        type="submit"
+      >
+        <CheckMark />
+      </button>
+    </form>
     <div class="box" :class="{ invisible: !(prev && prev.type === Step.DRAW) }">
       <svg
         class="svg disabled"
@@ -55,6 +64,13 @@ watch(countDown, () => {
 
 <style scoped>
 .write {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.form {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -85,6 +101,7 @@ watch(countDown, () => {
   border-radius: 2vw;
   padding: 2vw;
   margin-bottom: 0.5vh;
+  word-break: break-all;
 }
 .blur {
   color: transparent;
