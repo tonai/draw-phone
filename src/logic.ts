@@ -132,6 +132,11 @@ Rune.initLogic({
     },
     playerLeft(playerId, { game }) {
       game.playerIds.splice(game.playerIds.indexOf(playerId), 1)
+      if (game.playerReady.includes(playerId)) {
+        const index = game.playerReady.indexOf(playerId)
+        game.playerReady.splice(index, 1)
+      }
+      delete game.votes[playerId]
     },
   },
 })
