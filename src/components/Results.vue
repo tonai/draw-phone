@@ -2,48 +2,87 @@
 import { computed, onMounted, ref } from "vue"
 import { PlayerId } from "rune-sdk"
 
-import { playerRounds } from "../store"
-import { DrawRound, WriteRound } from "../types"
+import { mode, playerRounds } from "../store"
+import { DrawRound, Mode, WriteRound } from "../types"
 
+import AnimatedResult from "./AnimatedResult.vue"
 import Result from "./Result.vue"
 
 const intervalDelay = 5000
 
+interface PlayerResult {
+  id: string
+  playerId: PlayerId
+  result: DrawRound | WriteRound
+  separator: boolean
+}
+
+interface AnimatedPlayerResult {
+  id: string
+  playerId: PlayerId
+  background: DrawRound
+  frames: DrawRound[]
+  separator: boolean
+}
+
 const results = computed(() => {
-  const results: {
-    id: string
-    playerId: PlayerId
-    result: DrawRound | WriteRound
-    separator: boolean
-  }[] = []
   const players = Object.keys(playerRounds.value?.[0] ?? {})
-  for (let i = 0; i < players.length; i++) {
-    let round = 0
-    let playerId = players[i]
-    let result = playerRounds.value?.[round]?.[playerId]
-    if (result) {
-      results.push({
-        id: `${i}-${playerId}`,
-        playerId,
-        result,
-        separator: i !== 0,
-      })
-      while (result && result.next) {
-        round++
-        playerId = result.next
-        result = playerRounds.value?.[round]?.[playerId]
-        if (result) {
-          results.push({
-            id: `${i}-${playerId}`,
-            playerId,
-            result,
-            separator: false,
-          })
+  if (mode.value === Mode.BG) {
+    const results: AnimatedPlayerResult[] = []
+    for (let i = 0; i < players.length; i++) {
+      let round = 0
+      let playerId = players[i]
+      let background = playerRounds.value?.[0]?.[playerId] as DrawRound
+      if (background) {
+        let result = background
+        let frames: DrawRound[] = []
+        while (result && result.next) {
+          round++
+          result = playerRounds.value?.[round]?.[result.next] as DrawRound
+          if (result) {
+            frames.push(result)
+          }
+        }
+        results.push({
+          id: `${i}-${playerId}`,
+          playerId,
+          background,
+          frames,
+          separator: true,
+        })
+      }
+    }
+    return results
+  } else {
+    const results: PlayerResult[] = []
+    for (let i = 0; i < players.length; i++) {
+      let round = 0
+      let playerId = players[i]
+      let result = playerRounds.value?.[round]?.[playerId]
+      if (result) {
+        results.push({
+          id: `${i}-${playerId}`,
+          playerId,
+          result,
+          separator: i !== 0,
+        })
+        while (result && result.next) {
+          round++
+          playerId = result.next
+          result = playerRounds.value?.[round]?.[playerId]
+          if (result) {
+            results.push({
+              id: `${i}-${playerId}`,
+              playerId,
+              result,
+              separator: false,
+            })
+          }
         }
       }
     }
+    return results
   }
-  return results
 })
 
 const renderedIndex = ref(1)
@@ -67,13 +106,25 @@ onMounted(() => {
   <div class="results">
     <table class="table">
       <tbody>
-        <Result
-          v-for="result of rendererResults"
-          :key="result.id"
-          :player-id="result.playerId"
-          :result="result.result"
-          :separator="result.separator"
-        />
+        <template v-if="mode === Mode.BG">
+          <AnimatedResult
+            v-for="result of rendererResults"
+            :key="result.id"
+            :player-id="result.playerId"
+            :background="(result as AnimatedPlayerResult).background"
+            :frames="(result as AnimatedPlayerResult).frames"
+            :separator="result.separator"
+          />
+        </template>
+        <template v-else>
+          <Result
+            v-for="result of rendererResults"
+            :key="result.id"
+            :player-id="result.playerId"
+            :result="(result as PlayerResult).result"
+            :separator="result.separator"
+          />
+        </template>
       </tbody>
     </table>
   </div>

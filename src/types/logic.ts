@@ -12,6 +12,7 @@ export enum Step {
 export enum Mode {
   CLASSIC = "Classic",
   SECRET = "Secret",
+  BG = "Background",
 }
 
 export interface Round {

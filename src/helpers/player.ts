@@ -10,7 +10,7 @@ export function getPlayer(id?: string): Omit<Player, "playerId"> {
   }
   try {
     return Rune.getPlayerInfo(newPlayerIdMap.value[id] ?? id)
-  } catch (_) {
+  } catch (_error) {
     return defaultPlayer
   }
 }

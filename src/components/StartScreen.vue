@@ -25,7 +25,7 @@ const playersByMode = computed(() =>
       }
       return acc
     },
-    { [Mode.CLASSIC]: [], [Mode.SECRET]: [] }
+    { [Mode.CLASSIC]: [], [Mode.SECRET]: [], [Mode.BG]: [] }
   )
 )
 

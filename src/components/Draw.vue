@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from "vue"
+import { computed, onMounted, onUnmounted, ref, watch } from "vue"
 import { createDrauu } from "drauu"
 import {
   activeBrush,
@@ -24,6 +24,37 @@ import { DrawRound, Mode, Step } from "../types"
 import CheckMark from "./icon/CheckMark.vue"
 
 const interval = ref<number>()
+
+const text = computed(() => {
+  if (mode.value === Mode.BG) {
+    if (round.value === 0) {
+      return t("First draw the background")
+    } else if (round.value === 1) {
+      return t("Draw the first frame")
+    } else {
+      return t("Draw the next frame")
+    }
+  } else if (prev.value && prev.value.type === Step.WRITE) {
+    return prev.value.text
+  }
+  return ""
+})
+const background = computed(() => {
+  if (round.value === 0) {
+    return null
+  }
+  let currentRound = round.value
+  let playerRound = playerRounds.value[currentRound][prevPlayerId.value]
+  while (currentRound > 0) {
+    playerRound = playerRounds.value[currentRound - 1][playerRound.prev!]
+    currentRound--
+  }
+  return (
+    (playerRound.type === Step.DRAW &&
+      Object.values(playerRound.dump).join("")) ||
+    '<path fill="transparent" />'
+  )
+})
 
 onMounted(() => {
   const brush = {
@@ -92,11 +123,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="prev && prev.type === Step.WRITE" class="box">
+  <div v-if="text" class="box">
     <div class="text">
-      <span class="dimmed">{{ t("It's time to draw:") }}</span
-      >&nbsp;
-      <strong>{{ prev.text }}</strong>
+      <span v-if="mode !== Mode.BG" class="dimmed">
+        {{ t("It's time to draw:") }}&nbsp;
+      </span>
+      <strong>{{ text }}</strong>
     </div>
     <button
       class="button button-sm"
@@ -110,12 +142,25 @@ onMounted(() => {
   <div class="draw">
     <div class="container">
       <svg
+        v-if="mode === Mode.BG && round > 0 && background"
+        class="svg disabled"
+        viewBox="0 0 300 400"
+        v-html="background"
+      ></svg>
+      <svg
+        v-if="mode === Mode.BG && round > 1 && prev && prev.type === Step.DRAW"
+        class="svg disabled transparent with-opacity"
+        viewBox="0 0 300 400"
+        v-html="Object.values(prev.dump).join('')"
+      ></svg>
+      <svg
         ref="svg"
         class="svg"
         :class="{
           disabled: disabled,
           enabled: !disabled,
           secret: mode === Mode.SECRET,
+          transparent: mode === Mode.BG && round > 0,
         }"
         viewBox="0 0 300 400"
       ></svg>
@@ -175,5 +220,11 @@ onMounted(() => {
     fill: transparent;
     stroke: transparent;
   }
+}
+.transparent {
+  background-color: transparent;
+}
+.with-opacity {
+  opacity: 0.5;
 }
 </style>

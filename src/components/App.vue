@@ -106,7 +106,7 @@ onUnmounted(() => music.value?.pause())
     <StartScreen v-if="step === Step.WAIT" />
     <Write v-if="step === Step.WRITE && isPlayer" />
     <div v-if="step === Step.DRAW && isPlayer" class="container">
-      <Draw />
+      <Draw :key="round" />
       <DrawControls />
     </div>
     <Results v-if="step === Step.RESULTS" />
