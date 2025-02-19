@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue"
 
+import { descriptions } from "../constants"
 import top from "../assets/top-full.webp"
 import bottom from "../assets/bottom-full.webp"
 import {
@@ -15,6 +16,7 @@ import {
 import { Mode } from "../types"
 
 import Avatar from "./Avatar.vue"
+import Tooltip from "./Tooltip.vue"
 
 const opened = ref(false)
 const playersByMode = computed(() =>
@@ -97,6 +99,11 @@ function ready(mode: Mode) {
           >
             {{ t(mode) }}
           </button>
+        </div>
+        <div class="mode-help">
+          <Tooltip>
+            <p>{{ t(descriptions[mode]) }}</p>
+          </Tooltip>
         </div>
         <div class="mode-avatars">
           <Avatar
@@ -249,9 +256,13 @@ function ready(mode: Mode) {
 }
 .mode-button {
   display: table-cell;
-  width: 60vw;
+  width: 50vw;
   padding: 1vh 4vw 1vh 0;
   text-align: right;
+}
+.mode-help {
+  display: table-cell;
+  width: 10vw;
 }
 .mode-avatars {
   display: table-cell;
