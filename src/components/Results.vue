@@ -16,7 +16,7 @@ const results = computed(() => {
     result: DrawRound | WriteRound
     separator: boolean
   }[] = []
-  const players = Object.keys(playerRounds.value[0])
+  const players = Object.keys(playerRounds.value?.[0] ?? {})
   for (let i = 0; i < players.length; i++) {
     let round = 0
     let playerId = players[i]
@@ -28,18 +28,18 @@ const results = computed(() => {
         result,
         separator: i !== 0,
       })
-    }
-    while (result.next) {
-      round++
-      playerId = result.next
-      result = playerRounds.value?.[round]?.[playerId]
-      if (result) {
-        results.push({
-          id: `${i}-${playerId}`,
-          playerId,
-          result,
-          separator: false,
-        })
+      while (result && result.next) {
+        round++
+        playerId = result.next
+        result = playerRounds.value?.[round]?.[playerId]
+        if (result) {
+          results.push({
+            id: `${i}-${playerId}`,
+            playerId,
+            result,
+            separator: false,
+          })
+        }
       }
     }
   }
@@ -52,7 +52,6 @@ const rendererResults = computed(() =>
 )
 
 onMounted(() => {
-  console.log("again")
   const interval = setInterval(() => {
     if (renderedIndex.value === results.value.length) {
       clearInterval(interval)

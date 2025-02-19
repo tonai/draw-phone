@@ -2,16 +2,16 @@
 import { Player, PlayerId } from "rune-sdk"
 import { computed } from "vue"
 
+import { getPlayer } from "../helpers"
+
 const props = defineProps<{
   border?: boolean
   id?: PlayerId
   name?: boolean
-  player?: Player
+  player?: Omit<Player, "playerId">
 }>()
 
-const player = computed(
-  () => props.player ?? Rune.getPlayerInfo(props.id ?? "")
-)
+const player = computed(() => props.player ?? getPlayer(props.id))
 </script>
 
 <template>

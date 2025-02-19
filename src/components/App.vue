@@ -8,6 +8,7 @@ import {
   locale,
   mode,
   playerId,
+  playerIdMap,
   playerIds,
   playerReady,
   playerRounds,
@@ -69,6 +70,9 @@ onMounted(() => {
       }
       if (mode.value !== game.mode) {
         mode.value = game.mode
+      }
+      if (playerIdMap.value !== game.playerIdMap) {
+        playerIdMap.value = game.playerIdMap
       }
     },
   })

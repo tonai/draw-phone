@@ -12,13 +12,15 @@ import {
   drauu,
   isDrawing,
   mode,
-  playerId,
+  playerRounds,
   prev,
+  prevPlayerId,
+  round,
   svg,
   syncDraw,
   t,
 } from "../store"
-import { Mode, Step } from "../types"
+import { DrawRound, Mode, Step } from "../types"
 import CheckMark from "./icon/CheckMark.vue"
 
 const interval = ref<number>()
@@ -37,6 +39,13 @@ onMounted(() => {
   drauu.value = drauuInstance
 
   interval.value = setInterval(syncDraw, 1000)
+
+  const dump = (
+    playerRounds.value?.[round.value]?.[prevPlayerId.value] as DrawRound
+  )?.dump
+  if (dump) {
+    drauuInstance.load(Object.values(dump).join(""))
+  }
 })
 
 onUnmounted(() => {
@@ -57,7 +66,7 @@ function start() {
     const currentNode = drauu.value?._currentNode
     if (currentNode) {
       currentNode.dataset.time = String(Date.now())
-      currentNode.dataset.id = playerId.value
+      currentNode.dataset.id = prevPlayerId.value
     }
   })
 }

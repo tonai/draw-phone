@@ -1,11 +1,23 @@
 <script setup lang="ts">
 import { ref, watch } from "vue"
 
-import { countDown, disabled, mode, prev, t } from "../store"
-import { Mode, Step } from "../types"
+import {
+  countDown,
+  disabled,
+  mode,
+  playerRounds,
+  prev,
+  prevPlayerId,
+  round,
+  t,
+} from "../store"
+import { Mode, Step, WriteRound } from "../types"
 import CheckMark from "./icon/CheckMark.vue"
 
-const text = ref("")
+const text = ref(
+  (playerRounds.value?.[round.value]?.[prevPlayerId.value] as WriteRound)
+    ?.text ?? ""
+)
 function write(enabled: boolean = false) {
   Rune.actions.write({ enabled, text: text.value })
 }

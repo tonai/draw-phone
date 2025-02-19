@@ -34,12 +34,15 @@ export type PlayerRounds = Record<PlayerId, DrawRound | WriteRound>[]
 
 export interface GameState {
   countDown: number
+  id: string
   mode: Mode
   playerIds: PlayerId[]
+  playerIdMap: Record<PlayerId, PlayerId>
   playerReady: PlayerId[]
   playerRounds: PlayerRounds
   round: number
   startTime: number
+  startPlayerIds: PlayerId[]
   step: Step
   votes: Record<PlayerId, Mode | undefined>
 }
@@ -54,6 +57,8 @@ type GameActions = {
 }
 
 type Persisted = {
+  gameId?: string
+  prevPlayerId?: PlayerId
   locale: string
 }
 

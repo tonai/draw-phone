@@ -46,6 +46,7 @@ export const playerId = ref("")
 export const playerIds = ref<string[]>([])
 export const playerReady = ref<string[]>([])
 export const votes = ref<Record<string, Mode | undefined>>({})
+export const playerIdMap = ref<Record<string, string>>({})
 
 export const round = ref(0)
 export const playerRounds = ref<PlayerRounds>([])
@@ -59,15 +60,25 @@ export const lastTime = ref<Record<string, number>>({})
 export const lastDump = ref<string[]>([])
 export const lastNodes = ref<SVGElement[]>([])
 
-export const isPlayer = computed(() => playerIds.value.includes(playerId.value))
+export const newPlayerIdMap = computed(() =>
+  Object.fromEntries(
+    Object.entries(playerIdMap.value).map(([newId, prevId]) => [prevId, newId])
+  )
+)
+export const prevPlayerId = computed(
+  () => playerIdMap.value[playerId.value] || playerId.value
+)
+export const isPlayer = computed(() =>
+  playerIds.value.includes(prevPlayerId.value)
+)
 export const disabled = computed(() =>
-  playerReady.value.includes(playerId.value)
+  playerReady.value.includes(prevPlayerId.value)
 )
 
 export const prev = computed(() =>
   round.value > 0
     ? playerRounds.value[round.value - 1][
-        playerRounds.value[round.value][playerId.value].prev!
+        playerRounds.value[round.value][prevPlayerId.value].prev!
       ]
     : undefined
 )
@@ -82,7 +93,7 @@ export function syncDraw(done = false, enabled = false) {
     ) as SVGElement[]
     const dump = nodes.map((node) => node.outerHTML)
     const diff = getDiff(
-      playerId.value,
+      prevPlayerId.value,
       lastNodes.value,
       nodes,
       lastDump.value,

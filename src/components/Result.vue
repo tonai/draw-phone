@@ -3,6 +3,7 @@ import { computed } from "vue"
 import { PlayerId } from "rune-sdk"
 
 import { DrawRound, Step, WriteRound } from "../types"
+import { getPlayer } from "../helpers"
 
 import Appear from "./Appear.vue"
 import Avatar from "./Avatar.vue"
@@ -13,7 +14,7 @@ const props = defineProps<{
   separator: boolean
 }>()
 
-const player = computed(() => Rune.getPlayerInfo(props.playerId))
+const player = computed(() => getPlayer(props.playerId))
 </script>
 
 <template>
