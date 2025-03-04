@@ -18,11 +18,11 @@ function stop(event: Event) {
 }
 
 onMounted(() => {
-  window.addEventListener("click", close)
+  document.body.addEventListener("click", close)
 })
 
 onUnmounted(() => {
-  window.removeEventListener("click", close)
+  document.body.removeEventListener("click", close)
 })
 </script>
 
