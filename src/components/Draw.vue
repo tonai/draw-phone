@@ -123,7 +123,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="text" class="box">
+  <div class="box">
     <div class="text">
       <span v-if="mode !== Mode.BG" class="dimmed">
         {{ t("It's time to draw:") }}&nbsp;

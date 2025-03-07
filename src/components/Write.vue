@@ -18,20 +18,32 @@ const text = ref(
   (playerRounds.value?.[round.value]?.[prevPlayerId.value] as WriteRound)
     ?.text ?? ""
 )
+const error = ref(false)
+
 function write(enabled: boolean = false) {
-  Rune.actions.write({ enabled, text: text.value })
+  if (enabled || text.value !== "") {
+    error.value = false
+    Rune.actions.write({ enabled, text: text.value })
+  } else if (!enabled && text.value === "") {
+    error.value = true
+  }
 }
 
 function handleKeyDown(event: KeyboardEvent) {
   if (event.key === "Enter") {
     event.preventDefault()
-    Rune.actions.write({ enabled: false, text: text.value })
+    if (text.value !== "") {
+      error.value = false
+      Rune.actions.write({ enabled: false, text: text.value })
+    } else {
+      error.value = true
+    }
   }
 }
 
 watch(countDown, () => {
   if (countDown.value === 0) {
-    write()
+    Rune.actions.write({ enabled: false, text: text.value })
   }
 })
 </script>
@@ -52,13 +64,18 @@ watch(countDown, () => {
         rows="2"
         @keydown="handleKeyDown"
       ></textarea>
-      <button
-        class="button button-sm"
-        :class="{ selected: disabled }"
-        type="submit"
-      >
-        <CheckMark />
-      </button>
+      <div class="submit">
+        <button
+          class="button button-sm"
+          :class="{ selected: disabled }"
+          type="submit"
+        >
+          <CheckMark />
+        </button>
+        <p class="error" :class="{ visible: error }">
+          {{ t("Write something") }}
+        </p>
+      </div>
     </form>
     <div class="box" :class="{ invisible: !(prev && prev.type === Step.DRAW) }">
       <svg
@@ -118,5 +135,23 @@ watch(countDown, () => {
 .blur {
   color: transparent;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.submit {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.error {
+  margin: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  position: absolute;
+  left: 100%;
+  margin-left: 1vw;
+  max-width: 40vw;
+  font-weight: bold;
+}
+.error.visible {
+  opacity: 1;
 }
 </style>
